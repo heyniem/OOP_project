@@ -1,17 +1,23 @@
 package entities.AnimatedEntities.Characters.Enemies;
 
 import AI.AIEnemies.SuperDumbAI;
+import entities.AnimatedEntities.AnimatedEntity;
+import entities.Entity;
 import javafx.scene.image.Image;
+
+import java.util.List;
+
 import static entities.Map.scene;
 import static graphics.Sprite.*;
+import static Database.Database.entities;
 
 public class Balloon extends Enemy{
     private int direction = 1;
     private int temp;
     SuperDumbAI balloonAI = new SuperDumbAI();
 
-    public Balloon(int xUnit, int yUnit, Image img) {
-        super(xUnit, yUnit, img);
+    public Balloon(int xUnit, int yUnit, Image img, int id) {
+        super(xUnit, yUnit, img, id);
     }
 
     @Override
@@ -22,43 +28,33 @@ public class Balloon extends Enemy{
         temp = direction;
         while (true) {
             if (direction == 1) {
-                if (isFree(x+1,y)) {
+                if (isFree(x+1,y) && !isCollide(entities, x+1, y)) {
                     this.x++;
                     break;
                 } else {
                     direction = 2;
                 }
-
-                //this.x++;
             } else if (direction == 2) {
-
-                if (isFree(x,y+1)) {
+                if (isFree(x,y+1) && !isCollide(entities, x, y+1)) {
                     this.y++;
                     break;
                 } else {
                     direction = 3;
                 }
-
-                //this.y++;
             } else if (direction == 3) {
-
-                if (isFree(x-1,y)) {
+                if (isFree(x-1,y) && !isCollide(entities, x-1, y)) {
                     this.x--;
                     break;
                 } else {
                     direction = 0;
                 }
-
-                //this.x--;
             } else if (direction == 0){
-                if (isFree(x,y-1)) {
+                if (isFree(x,y-1) && !isCollide(entities, x, y-1)) {
                     this.y--;
                     break;
                 } else {
                     direction = 1;
                 }
-
-                //this.y--;
             }
             if (direction == temp) break;
         }
@@ -83,4 +79,19 @@ public class Balloon extends Enemy{
                 (scene[nextY_4][nextX_4] == 1 || scene[nextY_4][nextX_4] == 2));
     }
 
+    @Override
+    protected boolean isCollide(List<AnimatedEntity> entities, int newX, int newY) {
+        int tempX, tempY;
+        for (AnimatedEntity i : entities) {
+            if (i.getId() != this.id){
+                tempX = i.getX();
+                tempY = i.getY();
+                if (Math.abs(tempX - newX) < 32 && Math.abs(tempY - newY) < 32) {
+                    System.out.println("True");
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 }

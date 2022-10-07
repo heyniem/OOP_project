@@ -1,3 +1,4 @@
+import entities.AnimatedEntities.AnimatedEntity;
 import entities.AnimatedEntities.Characters.Enemies.Balloon;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
@@ -42,30 +43,6 @@ public class Main extends Application {
         // Create scene
         Scene scene = new Scene(root);
         keyHandle.checkKey(scene);
-//        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
-//            @Override
-//            public void handle(KeyEvent keyEvent) {
-//                KeyCode code = keyEvent.getCode();
-//                if (code == KeyCode.W) up = true;
-//                if (code == KeyCode.S) down = true;
-//                if (code == KeyCode.A) left = true;
-//                if (code == KeyCode.D) right = true;
-//            }
-//        });
-//        scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
-//            @Override
-//            public void handle(KeyEvent keyEvent) {
-//                KeyCode code = keyEvent.getCode();
-//                if (code == KeyCode.W) up = false;
-//                if (code == KeyCode.S) down = false;
-//                if (code == KeyCode.A) left = false;
-//                if (code == KeyCode.D) right = false;
-//            }
-//        });
-
-
-
-        // Add scene to stage
         stage.setScene(scene);
         stage.show();
 
@@ -113,8 +90,9 @@ public class Main extends Application {
     }
 
     public void update() {
-        entities.forEach(Entity::update);
-        //bomber.update();
+        for (Entity i : entities) {
+            i.update();
+        }
     }
 
     public void render() {
@@ -126,22 +104,22 @@ public class Main extends Application {
 
     public void createMonsters() {
         Random randomGen = new Random();
-        Entity object;
+        AnimatedEntity object;
         for (int i = 0; i < 5; i++) {
             while(true) {
                 int ranx = randomGen.nextInt(18);
                 int rany = randomGen.nextInt(13);
                 if ((ranx >=2 || rany >=2) && scene[rany+1][ranx+1] == 0) {
-                    object = new Balloon(ranx+1, rany+1, balloom_left1.getFxImage());
+                    object = new Balloon(ranx+1, rany+1, balloom_left1.getFxImage(), i+1);
                     entities.add(object);
-                    scene[rany+1][ranx+1] = 3;
+                    //scene[rany+1][ranx+1] = 3;
                     break;
                 }
             }
         }
-        object = new Balloon(2, 1, balloom_left1.getFxImage());
-        entities.add(object);
-        scene[1][1] = 3;
+        //object = new Balloon(2, 1, balloom_left1.getFxImage());
+        ///entities.add(object);
+        //scene[1][1] = 3;
 
     }
 }

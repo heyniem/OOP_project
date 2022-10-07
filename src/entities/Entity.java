@@ -13,7 +13,15 @@ public abstract class Entity {
 
     protected Image img;
 
-    public Entity( int xUnit, int yUnit, Image img) {
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public Entity(int xUnit, int yUnit, Image img) {
         this.x = xUnit * Sprite.SCALED_SIZE;
         this.y = yUnit * Sprite.SCALED_SIZE;
         this.img = img;

@@ -4,7 +4,14 @@ import entities.Entity;
 import javafx.scene.image.Image;
 
 public abstract class AnimatedEntity extends Entity {
-    public AnimatedEntity(int xUnit, int yUnit, Image img) {
+    protected int id;
+
+    public int getId() {
+        return id;
+    }
+
+    public AnimatedEntity(int xUnit, int yUnit, Image img, int id) {
         super(xUnit, yUnit, img);
+        this.id = id;
     }
 }
