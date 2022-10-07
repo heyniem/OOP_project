@@ -7,68 +7,73 @@ import static graphics.Sprite.SCALED_SIZE;
 import static entities.Map.scene;
 
 public class Bomberman extends Character{
-    private int speed = 2;
-    //private int status = -1;
+    private final int speed = 2;
+    private int tempX, tempY;
     public Bomberman(int xUnit, int yUnit, Image img) {
         super(xUnit, yUnit, img);
     }
 
     @Override
     public void update() {
-        if (up && isCollided(x,y-speed)) y -= speed;
-        if (down && isCollided(x,y+speed)) y += speed;
-        if (right && isCollided(x+speed,y)) x += speed;
-        if (left && isCollided(x-speed,y)) x -= speed;
+        if (up) {
+            if (x%SCALED_SIZE == 0 && isFree(x,y-speed)) y-=speed;
+            else {
+                if (x%SCALED_SIZE <15) {
+                    tempX = x-x%SCALED_SIZE;
+                    //System.out.println(tempX + " " + y);
+                    if (isFree(tempX,y-speed)) x-=speed;
+                }
+                else if (x%SCALED_SIZE > 17) {
+                    tempX = x-x%SCALED_SIZE + 32;
+                    //System.out.println(tempX + " " + y + "100");
+                    if (isFree(tempX, y-speed)) x+=speed;
+                }
+            }
+        }
+        if (down) {
+            if (x%SCALED_SIZE == 0 && isFree(x,y+speed)) y+=speed;
+            else {
+                if (x%SCALED_SIZE <15) {
+                    tempX = x-x%SCALED_SIZE;
+                    //System.out.println(tempX + " " + y);
+                    if (isFree(tempX,y+speed)) x-=speed;
+                }
+                else if (x%SCALED_SIZE > 17) {
+                    tempX = x-x%SCALED_SIZE + 32;
+                    //System.out.println(tempX + " " + y + "100");
+                    if (isFree(tempX, y+speed)) x+=speed;
+                }
+            }
+        }
+        if (right) {
+            if (y%SCALED_SIZE == 0 && isFree(x+speed,y)) x+=speed;
+            else {
+                if (y%SCALED_SIZE <15) {
+                    tempY = y-y%SCALED_SIZE;
+                    if (isFree(x+speed,tempY)) y-=speed;
+                }
+                else if (y%SCALED_SIZE > 17) {
+                    tempY = y-y%SCALED_SIZE + 32;
+                    if (isFree(x+speed, tempY)) y+=speed;
+                }
+            }
+        }
+        if (left) {
+            if (y%SCALED_SIZE == 0 && isFree(x-speed,y)) x-=speed;
+            else {
+                if (y%SCALED_SIZE <15) {
+                    tempY = y-y%SCALED_SIZE;
+                    if (isFree(x-speed,tempY)) y-=speed;
+                }
+                else if (y%SCALED_SIZE > 17) {
+                    tempY = y-y%SCALED_SIZE + 32;
+                    if (isFree(x-speed, tempY)) y+=speed;
+                }
+            }
+        }
     }
 
-    private boolean isCollided(int nextX, int nextY) {
-//        int xCur = x/SCALED_SIZE;
-//        int yCur = y/SCALED_SIZE;
-//        boolean result = false;
-//        if (right) {
-//            if (y%SCALED_SIZE == 0) {
-//                if (scene[yCur][xCur+1] == 0) {
-//                }
-//                else result = true;
-//            }
-//            else result = true;
-//        }
-//        if (up) {
-//            if (x%SCALED_SIZE == 0) {
-//                if (y%SCALED_SIZE == 0) {
-//                    if (scene[yCur - 1][xCur] == 0) {
-//                    }
-//                    else result = true;
-//                } else {
-//                    if (scene[yCur][xCur] == 0) {
-//                    }
-//                    else result = true;
-//                }
-//            }
-//            else result = true;
-//        }
-//        if (down) {
-//            if (x%SCALED_SIZE == 0) {
-//                if (scene[yCur+1][xCur] == 0) {
-//                }
-//                else result = true;
-//            }
-//            else result = true;
-//        }
-//        if (left) {
-//            if (y%SCALED_SIZE == 0) {
-//                if (x%SCALED_SIZE == 0) {
-//                    if (scene[yCur][xCur-1] == 0){}
-//                    else result = true;
-//                } else {
-//                    if (scene[yCur][xCur] == 0){}
-//                    else result = true;
-//                }
-//            }
-//            else result = true;
-//        }
-//        return result;
-//    }
+    private boolean isFree(int nextX, int nextY) {
         int nextX_1 = nextX / SCALED_SIZE;
         int nextY_1 = nextY / SCALED_SIZE;
 

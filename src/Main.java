@@ -1,46 +1,27 @@
-import Input.KeyHandle;
-import entities.AnimatedEntities.Characters.Bomberman;
+import entities.AnimatedEntities.Characters.Enemies.Balloon;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
-import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import entities.Entity;
 import entities.AnimatedEntities.Tiles.Path;
 import entities.AnimatedEntities.Tiles.Wall;
 import graphics.Sprite;
-import entities.Map;
+import static Database.Database.*;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 import static entities.Map.scene;
+import static graphics.Sprite.balloom_left1;
 
 public class Main extends Application {
 
-    public static final int WIDTH = 20;
-    public static final int HEIGHT = 15;
-
-    public boolean up, down, right, left;
-
-    public int Xunit = 1;
-    public int Yunit = 1;
-
-
     private GraphicsContext gc;
     private Canvas canvas;
-    private List<Entity> entities = new ArrayList<>();
-    private List<Entity> stillObjects = new ArrayList<>();
 
-    public static KeyHandle keyHandle = new KeyHandle();
-
-    Entity bomber = new Bomberman(Xunit, Yunit, Sprite.player_down.getFxImage());
 
 
 
@@ -98,6 +79,7 @@ public class Main extends Application {
         timer.start();
 
         createMap();
+        createMonsters();
     }
 
     public void createMap() {
@@ -140,5 +122,26 @@ public class Main extends Application {
         stillObjects.forEach(g -> g.render(gc));
         entities.forEach(g -> g.render(gc));
         //bomber.render(gc);
+    }
+
+    public void createMonsters() {
+        Random randomGen = new Random();
+        Entity object;
+        for (int i = 0; i < 5; i++) {
+            while(true) {
+                int ranx = randomGen.nextInt(18);
+                int rany = randomGen.nextInt(13);
+                if ((ranx >=2 || rany >=2) && scene[rany+1][ranx+1] == 0) {
+                    object = new Balloon(ranx+1, rany+1, balloom_left1.getFxImage());
+                    entities.add(object);
+                    scene[rany+1][ranx+1] = 3;
+                    break;
+                }
+            }
+        }
+        object = new Balloon(2, 1, balloom_left1.getFxImage());
+        entities.add(object);
+        scene[1][1] = 3;
+
     }
 }
