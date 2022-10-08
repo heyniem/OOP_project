@@ -11,7 +11,12 @@ public abstract class Entity {
     protected int x;
     protected int y;
 
+    public int posX;
+    public int posY;
+
     protected Image img;
+    public boolean checkItem;
+
 
     public int getX() {
         return x;
@@ -31,4 +36,15 @@ public abstract class Entity {
         gc.drawImage(img, x, y);
     }
     public abstract void update();
+
+    public int returnPosX() {
+        return posX;
+    }
+
+    public int returnPosY() {
+        return posY;
+    }
+    public void setImg(Image image) {
+        this.img = image;
+    }
 }

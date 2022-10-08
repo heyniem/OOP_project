@@ -1,5 +1,6 @@
 import entities.AnimatedEntities.AnimatedEntity;
 import entities.AnimatedEntities.Characters.Enemies.Balloon;
+import entities.AnimatedEntities.Tiles.Items.BombItem;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Group;
@@ -63,8 +64,11 @@ public class Main extends Application {
         for (int i = 0; i < HEIGHT; i++) {
             for (int j = 0; j < WIDTH; j++) {
                 if (scene[i][j] == 0) {
-                    if (new Random().nextInt(10) < 1) {
+                    int ran = new Random().nextInt(15);
+                    if (ran <= 1) {
                         scene[i][j] = 2;
+                    } else if (ran == 2){
+                        scene[i][j] = 3;
                     }
                 }
             }
@@ -80,6 +84,9 @@ public class Main extends Application {
                     object = new Wall(j, i, Sprite.wall.getFxImage());
                 } else if (scene[i][j] == 2) {
                     object = new Wall(j, i, Sprite.brick.getFxImage());
+                } else if (scene[i][j] == 3 && numOfBombItem <=3) {
+                    numOfBombItem++;
+                    object = new BombItem(j, i, Sprite.powerup_bombs.getFxImage());
                 } else {
                     object = new Path(j, i, Sprite.grass.getFxImage());
                 }
@@ -97,9 +104,16 @@ public class Main extends Application {
 
     public void render() {
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-        stillObjects.forEach(g -> g.render(gc));
+        for (int i = 0; i < stillObjects.size(); i++)
+        {
+            if (bomber.checkItem) {
+                Entity object = new Path(bomber.returnPosY(), bomber.returnPosX(), Sprite.grass.getFxImage());
+                stillObjects.add(object);
+                bomber.checkItem = false;
+            }
+            stillObjects.get(i).render(gc);
+        }
         entities.forEach(g -> g.render(gc));
-        //bomber.render(gc);
     }
 
     public void createMonsters() {
@@ -112,14 +126,9 @@ public class Main extends Application {
                 if ((ranx >=2 || rany >=2) && scene[rany+1][ranx+1] == 0) {
                     object = new Balloon(ranx+1, rany+1, balloom_left1.getFxImage(), i+1);
                     entities.add(object);
-                    //scene[rany+1][ranx+1] = 3;
                     break;
                 }
             }
         }
-        //object = new Balloon(2, 1, balloom_left1.getFxImage());
-        ///entities.add(object);
-        //scene[1][1] = 3;
-
     }
 }

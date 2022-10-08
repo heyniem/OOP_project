@@ -14,4 +14,12 @@ public abstract class AnimatedEntity extends Entity {
         super(xUnit, yUnit, img);
         this.id = id;
     }
+
+    public int returnPosY() {
+        return posY;
+    }
+
+    public int returnPosX() {
+        return posX;
+    }
 }
