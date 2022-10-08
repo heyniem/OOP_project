@@ -2,13 +2,15 @@ package entities.AnimatedEntities.Characters;
 
 import entities.AnimatedEntities.AnimatedEntity;
 
-import static Database.Database.bomber;
-import static Database.Database.entities;
-
+import entities.AnimatedEntities.Tiles.Path;
+import entities.Entity;
+import graphics.Sprite;
 import javafx.scene.image.Image;
 
 import java.util.List;
 
+import static Database.Database.*;
+import static Database.Database.WIDTH;
 import static Input.KeyHandle.*;
 import static entities.Map.scene;
 import static graphics.Sprite.*;
@@ -17,8 +19,6 @@ import static graphics.Sprite.player_down;
 public class Bomberman extends Character {
     public int framePlayer = 0, intervalPlayer = 5, indexPlayer = 0;
     public boolean moving;
-    public int posX;
-    public int posY;
     private final int speed = 2;
     private int tempX, tempY;
 
@@ -173,19 +173,18 @@ public class Bomberman extends Character {
         if (scene[nextY_1][nextX_1] == 3 || scene[nextY_2][nextX_2] == 3
                 || scene[nextY_3][nextX_3] == 3 || scene[nextY_4][nextX_4] == 3) {
             if (scene[nextY_1][nextX_1] == 3) {
-                posX = (int) nextY_1;
-                posY = (int) nextX_1;
+                Entity object = new Path(nextX_1, nextY_1, Sprite.grass.getFxImage());
+                stillObjects.set(nextY_1 * WIDTH + nextX_1, object);
             } else if (scene[nextY_2][nextX_2] == 3) {
-                posX = (int) nextY_2;
-                posY = (int) nextX_2;
+                Entity object = new Path(nextX_2, nextY_2, Sprite.grass.getFxImage());
+                stillObjects.set(nextY_2 * WIDTH + nextX_2, object);
             } else if (scene[nextY_3][nextX_3] == 3) {
-                posX = (int) nextY_3;
-                posY = (int) nextX_3;
+                Entity object = new Path(nextX_3, nextY_3, Sprite.grass.getFxImage());
+                stillObjects.set(nextY_3 * WIDTH + nextX_3, object);
             } else if (scene[nextY_4][nextX_4] == 3) {
-                posX = (int) nextY_4;
-                posY = (int) nextX_4;
+                Entity object = new Path(nextX_4, nextY_4, Sprite.grass.getFxImage());
+                stillObjects.set(nextY_4 * WIDTH + nextX_4, object);
             }
-            checkItem = true;
         }
 
         return !((scene[nextY_1][nextX_1] == 1 || scene[nextY_1][nextX_1] == 2) ||
@@ -208,13 +207,4 @@ public class Bomberman extends Character {
         }
         return false;
     }
-
-    public int returnPosX() {
-        return posX;
-    }
-
-    public int returnPosY() {
-        return posY;
-    }
-
 }

@@ -2,14 +2,13 @@ package entities.AnimatedEntities.Characters.Enemies;
 
 import AI.AIEnemies.SuperDumbAI;
 import entities.AnimatedEntities.AnimatedEntity;
-import entities.Entity;
 import javafx.scene.image.Image;
 
 import java.util.List;
 
+import static Database.Database.entities;
 import static entities.Map.scene;
 import static graphics.Sprite.*;
-import static Database.Database.entities;
 
 public class Balloon extends Enemy {
     public int frameBalloon = 0, intervalBalloon = 6, indexBalloon = 0;

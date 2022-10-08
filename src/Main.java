@@ -24,9 +24,6 @@ public class Main extends Application {
     private GraphicsContext gc;
     private Canvas canvas;
 
-
-
-
     public static void main(String[] args) {
         Application.launch(Main.class);
     }
@@ -104,15 +101,7 @@ public class Main extends Application {
 
     public void render() {
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-        for (int i = 0; i < stillObjects.size(); i++)
-        {
-            if (bomber.checkItem) {
-                Entity object = new Path(bomber.returnPosY(), bomber.returnPosX(), Sprite.grass.getFxImage());
-                stillObjects.add(object);
-                bomber.checkItem = false;
-            }
-            stillObjects.get(i).render(gc);
-        }
+        stillObjects.forEach(g->g.render(gc));
         entities.forEach(g -> g.render(gc));
     }
 
