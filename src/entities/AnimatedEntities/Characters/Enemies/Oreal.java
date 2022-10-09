@@ -1,7 +1,6 @@
 package entities.AnimatedEntities.Characters.Enemies;
 
 import entities.AnimatedEntities.AnimatedEntity;
-import entities.Entity;
 import javafx.scene.image.Image;
 
 import java.util.List;

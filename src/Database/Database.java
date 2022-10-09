@@ -13,7 +13,9 @@ public class Database {
     public static final int WIDTH = 20;
     public static final int HEIGHT = 15;
 
-    public static AnimatedEntity bomber = new Bomberman(1, 1, Sprite.doll_left1.getFxImage(), 100);
+    public static int numOfBombItem = 0;
+
+    public static AnimatedEntity bomber = new Bomberman(1, 1, Sprite.player_down.getFxImage(), 100);
 
 
     public static List<AnimatedEntity> entities = new ArrayList<>();
