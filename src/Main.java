@@ -1,5 +1,6 @@
 import entities.AnimatedEntities.AnimatedEntity;
 import entities.AnimatedEntities.Characters.Enemies.Balloon;
+import entities.AnimatedEntities.Characters.Enemies.Ghost;
 import entities.AnimatedEntities.Tiles.Items.BombItem;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
@@ -17,12 +18,16 @@ import static Database.Database.*;
 import java.util.Random;
 
 import static entities.Map.scene;
-import static graphics.Sprite.balloom_left1;
 
 public class Main extends Application {
 
     private GraphicsContext gc;
     private Canvas canvas;
+
+    private final long fps = 60;
+
+    private long timeCount = 0,preTimeCount = 0, sec = 0, start = System.currentTimeMillis();
+
 
     public static void main(String[] args) {
         Application.launch(Main.class);
@@ -48,7 +53,8 @@ public class Main extends Application {
             @Override
             public void handle(long l) {
                 render();
-                update();
+                update(stage);
+                checkDead();
             }
         };
         timer.start();
@@ -93,9 +99,23 @@ public class Main extends Application {
         entities.add(bomber);
     }
 
-    public void update() {
+    public void update(Stage stage) {
+        long firstTime = System.currentTimeMillis();
         for (Entity i : entities) {
             i.update();
+        }
+        long diff = System.currentTimeMillis() - firstTime;
+        timeCount++;
+        long temp = System.currentTimeMillis() - start;
+        if (temp/1000 == sec) {
+            if(sec!=0) stage.setTitle("Bomberman, fps=" + (timeCount-preTimeCount));
+            sec++;
+            preTimeCount = timeCount;
+        }
+        try {
+            Thread.sleep(1000/fps - diff-1);
+        } catch (Exception e) {
+            System.out.println(e);
         }
     }
 
@@ -113,11 +133,15 @@ public class Main extends Application {
                 int ranx = randomGen.nextInt(18);
                 int rany = randomGen.nextInt(13);
                 if ((ranx >=2 || rany >=2) && scene[rany+1][ranx+1] == 0) {
-                    object = new Balloon(ranx+1, rany+1, balloom_left1.getFxImage(), i+1);
+                    object = new Ghost(ranx+1, rany+1, Sprite.ghost_left1.getFxImage(), i+1);
                     entities.add(object);
                     break;
                 }
             }
         }
+    }
+
+    public void checkDead() {
+
     }
 }

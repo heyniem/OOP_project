@@ -15,8 +15,4 @@ public class Oreal extends Enemy {
         super.update();
     }
 
-    @Override
-    protected boolean isCollide(List<AnimatedEntity> entities, int newX, int newY) {
-        return false;
-    }
 }
