@@ -1,6 +1,8 @@
 package Database;
 
 import Input.KeyHandle;
+
+import Sound.Sound;
 import entities.AnimatedEntities.AnimatedEntity;
 import entities.AnimatedEntities.Characters.Bomberman;
 import entities.AnimatedEntities.Tiles.Items.Item;
@@ -16,6 +18,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Database {
+
+    public static Sound sound = new Sound();
+
     public static final int WIDTH = 20;
     public static final int HEIGHT = 15;
 

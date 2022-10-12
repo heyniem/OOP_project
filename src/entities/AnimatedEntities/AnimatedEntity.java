@@ -2,7 +2,8 @@ package entities.AnimatedEntities;
 
 import entities.Entity;
 import javafx.scene.image.Image;
-
+import Sound.Sound;
+import static Database.Database.sound;
 import static entities.Map.explodeScene;
 import static graphics.Sprite.SCALED_SIZE;
 
