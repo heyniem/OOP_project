@@ -3,9 +3,11 @@ package Database;
 import Input.KeyHandle;
 import entities.AnimatedEntities.AnimatedEntity;
 import entities.AnimatedEntities.Characters.Bomberman;
+import entities.AnimatedEntities.Tiles.Portal;
 import entities.AnimatedEntities.Weapons.Bomb.Bomb;
 import entities.Entity;
 import graphics.Sprite;
+import javafx.scene.image.Image;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,8 +29,9 @@ public class Database {
     public static int intervalExplode = 11;
 
 
-    // animate bomb Flame
 
+    public static Image menu = new Image("menu.png");
+    public static Entity menuObj = new Portal(0, 0, menu);
     public static AnimatedEntity bomber = new Bomberman(1, 1, Sprite.player_down.getFxImage(), 100);
 
 

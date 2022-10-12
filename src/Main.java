@@ -27,6 +27,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import static Database.Database.*;
+import static Input.KeyHandle.click;
 import static Input.KeyHandle.placeBomb;
 import static entities.Map.scene;
 import static graphics.Sprite.*;
@@ -40,7 +41,7 @@ public class Main extends Application {
 
     public int deadCount = 0;
 
-    private final long fps = 60;
+    private final long fps = 90;
 
     private long timeCount = 0,preTimeCount = 0, sec = 0, start = System.currentTimeMillis();
 
@@ -150,6 +151,7 @@ public class Main extends Application {
         stillObjects.forEach(g->g.render(gc));
         entities.forEach(g -> g.render(gc));
         bombList.forEach(g -> g.render(gc));
+        if (!click) menuObj.render(gc);
     }
 
     public void createMonsters() {

@@ -6,6 +6,7 @@ import entities.Entity;
 import graphics.Sprite;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+
 import static entities.Map.*;
 
 import java.util.ArrayList;
@@ -62,8 +63,7 @@ public class Bomb extends Weapon {
             } else if (indexBomb % 3 == 2) {
                 this.setImg(bomb_2.getFxImage());
             }
-        }
-        else {
+        } else {
             bombExplode();
         }
     }
@@ -72,17 +72,16 @@ public class Bomb extends Weapon {
     public void render(GraphicsContext gc) {
         super.render(gc);
         //System.out.println(bombFlameList.size());
-        bombFlameList.forEach(g-> g.render(gc));
+        bombFlameList.forEach(g -> g.render(gc));
     }
 
     public void bombExplode() {
         int tempX = this.x / SCALED_SIZE, tempY = this.y / SCALED_SIZE;
         if (!bomb_explode) {
-            bombFlameList.add(new BombFlame(tempX, tempY, bomb_exploded.getFxImage(),-1));
+            bombFlameList.add(new BombFlame(tempX, tempY, bomb_exploded.getFxImage(), -1));
             detectSurround(tempX, tempY);
             bomb_explode = true;
-        }
-        else {
+        } else {
             System.out.println("This done");
             for (BombFlame i : bombFlameList) i.update();
         }
@@ -90,7 +89,7 @@ public class Bomb extends Weapon {
         if (countFrameExplode > intervalExplode) {
             scene[tempY][tempX] = 0;
             for (BombFlame i : bombFlameList) {
-                explodeScene[i.y/SCALED_SIZE][i.x/SCALED_SIZE]--;
+                explodeScene[i.y / SCALED_SIZE][i.x / SCALED_SIZE]--;
             }
             bombList.remove(this);
         }
@@ -98,92 +97,91 @@ public class Bomb extends Weapon {
 
     public void detectSurround(int bombX, int bombY) {
         //Right
-        for (int i = 1;i <= maxBombRange; i++) {
-            if (scene[bombY][bombX+i] == 1) break;
-            else if (scene[bombY][bombX+i] == 2) {
+        for (int i = 1; i <= maxBombRange; i++) {
+            if (scene[bombY][bombX + i] == 1) break;
+            else if (scene[bombY][bombX + i] == 2) {
                 for (Entity j : stillObjects) {
-                    if (j.getX()/SCALED_SIZE == bombX+i && j.getY()/SCALED_SIZE == bombY) {
+                    if (j.getX() / SCALED_SIZE == bombX + i && j.getY() / SCALED_SIZE == bombY) {
                         j.isDestroyed = true;
                     }
                 }
                 //bombFlameList.add(new BombFlame(bombX + i, bombY, explosion_horizontal_right_last.getFxImage(), 11));
                 break;
-            }
-            else if (scene[bombY][bombX+i] == 3) {
+            } else if (scene[bombY][bombX + i] == 3) {
                 for (Bomb j : bombList) {
-                    if (j.getX()/SCALED_SIZE == bombX + i && j.getY()/SCALED_SIZE == bombY && !j.checkBombExplode) {
+                    if (j.getX() / SCALED_SIZE == bombX + i && j.getY() / SCALED_SIZE == bombY && !j.checkBombExplode) {
                         j.checkBombExplode = true;
                         j.timer.cancel();
                     }
                 }
                 break;
-            }
-            else {
-                if (i!=maxBombRange) bombFlameList.add(new BombFlame(bombX + i, bombY, explosion_horizontal.getFxImage(), 1));
-                else bombFlameList.add(new BombFlame(bombX + i, bombY, explosion_horizontal_right_last.getFxImage(), 11));
+            } else {
+                if (i != maxBombRange)
+                    bombFlameList.add(new BombFlame(bombX + i, bombY, explosion_horizontal.getFxImage(), 1));
+                else
+                    bombFlameList.add(new BombFlame(bombX + i, bombY, explosion_horizontal_right_last.getFxImage(), 11));
                 explodeScene[bombY][bombX + i]++;
             }
         }
         //Left
-        for (int i = 1;i <= maxBombRange; i++) {
-            if (scene[bombY][bombX-i] == 1) break;
-            else if (scene[bombY][bombX-i] == 2) {
+        for (int i = 1; i <= maxBombRange; i++) {
+            if (scene[bombY][bombX - i] == 1) break;
+            else if (scene[bombY][bombX - i] == 2) {
                 for (Entity j : stillObjects) {
-                    if (j.getX()/SCALED_SIZE == bombX-i && j.getY()/SCALED_SIZE == bombY) {
+                    if (j.getX() / SCALED_SIZE == bombX - i && j.getY() / SCALED_SIZE == bombY) {
                         j.isDestroyed = true;
                     }
                 }
                 //bombFlameList.add(new BombFlame(bombX - i, bombY, explosion_horizontal_left_last.getFxImage(), 13));
                 break;
-            }
-            else if (scene[bombY][bombX-i] == 3) {
+            } else if (scene[bombY][bombX - i] == 3) {
                 for (Bomb j : bombList) {
-                    if (j.getX()/SCALED_SIZE == bombX - i && j.getY()/SCALED_SIZE == bombY && !j.checkBombExplode) {
+                    if (j.getX() / SCALED_SIZE == bombX - i && j.getY() / SCALED_SIZE == bombY && !j.checkBombExplode) {
                         j.checkBombExplode = true;
                         j.timer.cancel();
                     }
                 }
                 break;
-            }
-            else {
-                if (i!=maxBombRange) bombFlameList.add(new BombFlame(bombX - i, bombY, explosion_horizontal.getFxImage(), 3));
-                else bombFlameList.add(new BombFlame(bombX - i, bombY, explosion_horizontal_left_last.getFxImage(), 13));
+            } else {
+                if (i != maxBombRange)
+                    bombFlameList.add(new BombFlame(bombX - i, bombY, explosion_horizontal.getFxImage(), 3));
+                else
+                    bombFlameList.add(new BombFlame(bombX - i, bombY, explosion_horizontal_left_last.getFxImage(), 13));
                 explodeScene[bombY][bombX - i]++;
             }
         }
         //Down
-        for (int i = 1;i <= maxBombRange; i++) {
-            if (scene[bombY+i][bombX] == 1) break;
-            else if (scene[bombY+i][bombX] == 2) {
+        for (int i = 1; i <= maxBombRange; i++) {
+            if (scene[bombY + i][bombX] == 1) break;
+            else if (scene[bombY + i][bombX] == 2) {
                 for (Entity j : stillObjects) {
-                    if (j.getX()/SCALED_SIZE == bombX && j.getY()/SCALED_SIZE == bombY + i) {
+                    if (j.getX() / SCALED_SIZE == bombX && j.getY() / SCALED_SIZE == bombY + i) {
                         j.isDestroyed = true;
                     }
                 }
                 //bombFlameList.add(new BombFlame(bombX, bombY + i, explosion_vertical_down_last.getFxImage(), 12));
                 break;
-            }
-            else if (scene[bombY+i][bombX] == 3) {
+            } else if (scene[bombY + i][bombX] == 3) {
                 for (Bomb j : bombList) {
-                    if (j.getX()/SCALED_SIZE == bombX && j.getY()/SCALED_SIZE == bombY + i && !j.checkBombExplode) {
+                    if (j.getX() / SCALED_SIZE == bombX && j.getY() / SCALED_SIZE == bombY + i && !j.checkBombExplode) {
                         j.checkBombExplode = true;
                         j.timer.cancel();
                     }
                 }
                 break;
-            }
-            else {
-                if (i!=maxBombRange) bombFlameList.add(new BombFlame(bombX, bombY + i, explosion_vertical.getFxImage(), 2));
+            } else {
+                if (i != maxBombRange)
+                    bombFlameList.add(new BombFlame(bombX, bombY + i, explosion_vertical.getFxImage(), 2));
                 else bombFlameList.add(new BombFlame(bombX, bombY + i, explosion_vertical_down_last.getFxImage(), 12));
-                explodeScene[bombY+i][bombX]++;
+                explodeScene[bombY + i][bombX]++;
             }
         }
         //Up
-        for (int i = 1;i <= maxBombRange; i++) {
-            if (scene[bombY-i][bombX] == 1) break;
-            else if (scene[bombY-i][bombX] == 2) {
+        for (int i = 1; i <= maxBombRange; i++) {
+            if (scene[bombY - i][bombX] == 1) break;
+            else if (scene[bombY - i][bombX] == 2) {
                 for (Entity j : stillObjects) {
-                    if (j.getX()/SCALED_SIZE == bombX && j.getY()/SCALED_SIZE == bombY - i) {
+                    if (j.getX() / SCALED_SIZE == bombX && j.getY() / SCALED_SIZE == bombY - i) {
                         System.out.println("This happened OMG");
                         j.isDestroyed = true;
                         break;
@@ -191,20 +189,19 @@ public class Bomb extends Weapon {
                 }
                 //bombFlameList.add(new BombFlame(bombX, bombY - i, explosion_vertical_top_last.getFxImage(), 10));
                 break;
-            }
-            else if (scene[bombY-i][bombX] == 3) {
+            } else if (scene[bombY - i][bombX] == 3) {
                 for (Bomb j : bombList) {
-                    if (j.getX()/SCALED_SIZE == bombX && j.getY()/SCALED_SIZE == bombY - i && !j.checkBombExplode) {
+                    if (j.getX() / SCALED_SIZE == bombX && j.getY() / SCALED_SIZE == bombY - i && !j.checkBombExplode) {
                         j.checkBombExplode = true;
                         j.timer.cancel();
                     }
                 }
                 break;
-            }
-            else {
-                if (i!=maxBombRange) bombFlameList.add(new BombFlame(bombX, bombY - i, explosion_vertical.getFxImage(), 0));
+            } else {
+                if (i != maxBombRange)
+                    bombFlameList.add(new BombFlame(bombX, bombY - i, explosion_vertical.getFxImage(), 0));
                 else bombFlameList.add(new BombFlame(bombX, bombY - i, explosion_vertical_top_last.getFxImage(), 10));
-                explodeScene[bombY-i][bombX]++;
+                explodeScene[bombY - i][bombX]++;
             }
         }
     }

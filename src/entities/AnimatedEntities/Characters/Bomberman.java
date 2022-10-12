@@ -17,7 +17,7 @@ import static graphics.Sprite.*;
 import static graphics.Sprite.player_down;
 
 public class Bomberman extends Character {
-    public int framePlayer = 0, intervalPlayer = 5, indexPlayer = 0;
+    public int framePlayer = 0, intervalPlayer = 4, indexPlayer = 0;
     public boolean moving;
     private final int speed = 2;
     private int tempX, tempY;
@@ -106,49 +106,49 @@ public class Bomberman extends Character {
             if (framePlayer > intervalPlayer) {
                 framePlayer = 0;
                 indexPlayer++;
-                if (indexPlayer > 2) {
+                if (indexPlayer > 3) {
                     indexPlayer = 0;
                 }
             }
 
             if (right) {
-                if (indexPlayer == 0) {
+                if (indexPlayer == 1) {
                     bomber.setImg(player_right.getFxImage());
                 }
-                if (indexPlayer == 1) {
+                if (indexPlayer == 2) {
                     bomber.setImg(player_right_1.getFxImage());
                 }
-                if (indexPlayer == 2) {
+                if (indexPlayer == 3) {
                     bomber.setImg(player_right_2.getFxImage());
                 }
             } else if (left) {
-                if (indexPlayer == 0) {
+                if (indexPlayer == 1) {
                     bomber.setImg(player_left.getFxImage());
                 }
-                if (indexPlayer == 1) {
+                if (indexPlayer == 2) {
                     bomber.setImg(player_left_1.getFxImage());
                 }
-                if (indexPlayer == 2) {
+                if (indexPlayer == 3) {
                     bomber.setImg(player_left_2.getFxImage());
                 }
             } else if (up) {
-                if (indexPlayer == 0) {
+                if (indexPlayer == 1) {
                     bomber.setImg(player_up.getFxImage());
                 }
-                if (indexPlayer == 1) {
+                if (indexPlayer == 2) {
                     bomber.setImg(player_up_1.getFxImage());
                 }
-                if (indexPlayer == 2) {
+                if (indexPlayer == 3) {
                     bomber.setImg(player_up_2.getFxImage());
                 }
             } else if (down) {
-                if (indexPlayer == 0) {
+                if (indexPlayer == 1) {
                     bomber.setImg(player_down.getFxImage());
                 }
-                if (indexPlayer == 1) {
+                if (indexPlayer == 2) {
                     bomber.setImg(player_down_1.getFxImage());
                 }
-                if (indexPlayer == 2) {
+                if (indexPlayer == 3) {
                     bomber.setImg(player_down_2.getFxImage());
                 }
             }
@@ -171,18 +171,18 @@ public class Bomberman extends Character {
         int nextX_4 = (nextX + SCALED_SIZE - 1) / SCALED_SIZE;
         int nextY_4 = (nextY + SCALED_SIZE - 1) / SCALED_SIZE;
 
-        if (scene[nextY_1][nextX_1] == 3 || scene[nextY_2][nextX_2] == 3
-                || scene[nextY_3][nextX_3] == 3 || scene[nextY_4][nextX_4] == 3) {
-            if (scene[nextY_1][nextX_1] == 3) {
+        if (scene[nextY_1][nextX_1] == 4 || scene[nextY_2][nextX_2] == 4
+                || scene[nextY_3][nextX_3] == 4 || scene[nextY_4][nextX_4] == 4) {
+            if (scene[nextY_1][nextX_1] == 4) {
                 Entity object = new Path(nextX_1, nextY_1, Sprite.grass.getFxImage());
                 stillObjects.set(nextY_1 * WIDTH + nextX_1, object);
-            } else if (scene[nextY_2][nextX_2] == 3) {
+            } else if (scene[nextY_2][nextX_2] == 4) {
                 Entity object = new Path(nextX_2, nextY_2, Sprite.grass.getFxImage());
                 stillObjects.set(nextY_2 * WIDTH + nextX_2, object);
-            } else if (scene[nextY_3][nextX_3] == 3) {
+            } else if (scene[nextY_3][nextX_3] == 4) {
                 Entity object = new Path(nextX_3, nextY_3, Sprite.grass.getFxImage());
                 stillObjects.set(nextY_3 * WIDTH + nextX_3, object);
-            } else if (scene[nextY_4][nextX_4] == 3) {
+            } else if (scene[nextY_4][nextX_4] == 4) {
                 Entity object = new Path(nextX_4, nextY_4, Sprite.grass.getFxImage());
                 stillObjects.set(nextY_4 * WIDTH + nextX_4, object);
             }
