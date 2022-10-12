@@ -6,5 +6,4 @@
 
 
 # About
-a pretty dumb project 
-kinda trashy 
+
