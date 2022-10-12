@@ -2,6 +2,7 @@ import entities.AnimatedEntities.AnimatedEntity;
 import entities.AnimatedEntities.Characters.Bomberman;
 import entities.AnimatedEntities.Characters.Enemies.Balloon;
 import entities.AnimatedEntities.Characters.Enemies.Ghost;
+import entities.AnimatedEntities.Characters.Enemies.Oreal;
 import entities.AnimatedEntities.Tiles.Items.BombItem;
 import entities.AnimatedEntities.Tiles.SoftWall;
 import entities.AnimatedEntities.Weapons.Bomb.Bomb;
@@ -133,17 +134,24 @@ public class Main extends Application {
     }
 
     public void update(Stage stage) {
-        for (Entity i : entities) {
-            i.update();
+        if (bomber.dead) {
+            bomber.update();
         }
-        for (int i = 0;i<stillObjects.size();i++) {
-            Entity temp = stillObjects.get(i);
-            temp.update();
-            if (!stillObjects.contains(temp)) {
-                i--;
+        else {
+            for (int i = 0; i < entities.size(); i++) {
+                Entity temp = entities.get(i);
+                temp.update();
+                if (!entities.contains(temp)) i--;
             }
+            for (int i = 0; i < stillObjects.size(); i++) {
+                Entity temp = stillObjects.get(i);
+                temp.update();
+                if (!stillObjects.contains(temp)) {
+                    i--;
+                }
+            }
+            bombSetup();
         }
-        bombSetup();
     }
 
     public void render() {
@@ -152,6 +160,9 @@ public class Main extends Application {
         entities.forEach(g -> g.render(gc));
         bombList.forEach(g -> g.render(gc));
         if (!click) menuObj.render(gc);
+        if (bomber.dead && gameOver) {
+            endObj.render(gc);
+        }
     }
 
     public void createMonsters() {
@@ -162,7 +173,7 @@ public class Main extends Application {
                 int ranx = randomGen.nextInt(18);
                 int rany = randomGen.nextInt(13);
                 if ((ranx >=2 || rany >=2) && scene[rany+1][ranx+1] == 0) {
-                    object = new Balloon(ranx+1, rany+1, balloom_left1.getFxImage(), i+1);
+                    object = new Oreal(ranx+1, rany+1, oneal_left1.getFxImage(), i+1);
                     entities.add(object);
                     break;
                 }

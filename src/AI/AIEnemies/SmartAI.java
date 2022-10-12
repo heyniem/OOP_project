@@ -15,14 +15,14 @@ public class SmartAI extends AIEnemy{
     public int chooseDirection(int monsterX, int monsterY, int currentDirection, int chance) {
         Character[][] matrix = mapToChar();
         //print matrix
-        for (int i = 0; i < matrix.length; i++) {
-            for (int j = 0; j < matrix[0].length; j++) {
-                System.out.print(matrix[i][j] + " ");
-            }
-            System.out.println();
-        }
+//        for (int i = 0; i < matrix.length; i++) {
+//            for (int j = 0; j < matrix[0].length; j++) {
+//                System.out.print(matrix[i][j] + " ");
+//            }
+//            System.out.println();
+//        }
         int check = pathExists(matrix, monsterX, monsterY);
-        System.out.println(check);
+        //System.out.println(check);
         if (check != -1) {
             int tempX = monsterX/SCALED_SIZE;
             int tempY = monsterY/SCALED_SIZE;

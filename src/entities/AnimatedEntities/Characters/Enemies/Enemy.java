@@ -11,7 +11,6 @@ import static entities.Map.scene;
 import static graphics.Sprite.SCALED_SIZE;
 
 public abstract class Enemy extends Character {
-    protected boolean dead = false;
     protected boolean canMoveThroughWall = false;
     public Enemy(int xUnit, int yUnit, Image img, int id) {
         super(xUnit, yUnit, img, id);

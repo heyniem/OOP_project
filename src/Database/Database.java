@@ -19,7 +19,7 @@ public class Database {
     public static int numOfBombItem = 0;
 
     public static int maxBomb = 2;
-    public static int maxBombRange = 1;
+    public static int maxBombRange = 5;
 
     // animate bomb
     public static final int intervalBomb = 5;
@@ -27,11 +27,16 @@ public class Database {
     // animate bomb explode
 
     public static boolean dead = false;
+    public static boolean gameOver = false;
 
     public static int intervalExplode = 11;
 
     public static Image menu = new Image("menu.png");
+    public static Image end = new Image("gameover.png");
     public static Entity menuObj = new Portal(0, 0, menu);
+
+    public static Entity endObj = new Portal(0, 0, end);
+
     public static AnimatedEntity bomber = new Bomberman(1, 1, Sprite.player_down.getFxImage(), 100);
 
 

@@ -3,14 +3,14 @@ package entities.AnimatedEntities.Characters.Enemies;
 import AI.AIEnemies.SuperDumbAI;
 import javafx.scene.image.Image;
 
-import static Database.Database.entities;
-import static entities.Map.explodeScene;
-import static entities.Map.scene;
+import static Database.Database.*;
+import static entities.Map.*;
 import static graphics.Sprite.*;
 
 public class Ghost extends Enemy {
     public int frameGhost = 0, intervalGhost = 5, indexGhost = 0;
     private int direction = 1;
+    private int intervalDead = 0;
     private int temp;
     SuperDumbAI ghostAI = new SuperDumbAI();
 
@@ -22,7 +22,9 @@ public class Ghost extends Enemy {
     @Override
     public void update() {
         if (dead) {
-            entities.remove(this);
+            intervalDead++;
+            if (intervalDead <= 11) setImg(ghost_dead.getFxImage());
+            else entities.remove(this);
         } else {
             if (x % SCALED_SIZE == 0 && y % SCALED_SIZE == 0) {
                 direction = ghostAI.chooseDirection(direction, 76);
@@ -98,11 +100,14 @@ public class Ghost extends Enemy {
 
     @Override
     protected boolean isFree(int nextX, int nextY) {
-        if (explodeScene[nextY / SCALED_SIZE][nextX / SCALED_SIZE] >= 1) {
-            dead = true;
-            return false;
+        if (nextX >= SCALED_SIZE && nextX <= SCALED_SIZE * (WIDTH-2) && nextY >= SCALED_SIZE && nextY < SCALED_SIZE * (HEIGHT - 2)) {
+            //System.out.println("Condition 1");
+            if (scene[nextY / SCALED_SIZE][nextX / SCALED_SIZE] == 3) {
+                return false;
+            }
+            else return true;
         }
-        return ((nextX >= 32 && nextX <= 32 * 18 && nextY >= 32 && nextY <= 32 * 13) && scene[nextY / SCALED_SIZE][nextX / SCALED_SIZE] != 3);
+        else return false;
     }
 
 }
