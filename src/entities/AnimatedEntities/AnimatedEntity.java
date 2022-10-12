@@ -14,4 +14,10 @@ public abstract class AnimatedEntity extends Entity {
         super(xUnit, yUnit, img);
         this.id = id;
     }
+
+    public boolean isDead() {
+        return false;
+    }
+
+    public void checkDead(){};
 }

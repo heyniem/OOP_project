@@ -9,6 +9,7 @@ import java.util.List;
 
 import static Database.Database.entities;
 import static graphics.Sprite.*;
+import static entities.Map.*;
 
 public class Ghost extends Enemy{
     public int frameGhost = 0, intervalGhost = 6, indexGhost = 0;
@@ -96,7 +97,7 @@ public class Ghost extends Enemy{
 
     @Override
     protected boolean isFree(int nextX, int nextY) {
-        return (nextX >= 32 && nextX <= 32 * 18 && nextY >=32 && nextY <= 32 * 13);
+        return ((nextX >= 32 && nextX <= 32 * 18 && nextY >=32 && nextY <= 32 * 13) && scene[nextY/SCALED_SIZE][nextX/SCALED_SIZE] != 3);
     }
 
 }

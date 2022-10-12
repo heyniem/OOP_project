@@ -23,7 +23,7 @@ public class Balloon extends Enemy {
     @Override
     public void update() {
         if (x % SCALED_SIZE == 0 && y % SCALED_SIZE == 0 && ((x / SCALED_SIZE) % 2 == 1 && (y / SCALED_SIZE) % 2 == 1)) {
-            direction = balloonAI.chooseDirection(direction, 64);
+            direction = balloonAI.chooseDirection(direction,  64);
         }
         temp = direction;
         while (true) {

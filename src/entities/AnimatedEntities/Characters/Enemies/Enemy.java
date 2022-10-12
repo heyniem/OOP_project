@@ -1,6 +1,7 @@
 package entities.AnimatedEntities.Characters.Enemies;
 
 import entities.AnimatedEntities.AnimatedEntity;
+import entities.AnimatedEntities.Characters.Bomberman;
 import entities.AnimatedEntities.Characters.Character;
 import javafx.scene.image.Image;
 
@@ -29,16 +30,16 @@ public abstract class Enemy extends Character {
         int nextX_4 = (nextX + SCALED_SIZE - 1) / SCALED_SIZE;
         int nextY_4 = (nextY + SCALED_SIZE - 1) / SCALED_SIZE;
 
-        return !((scene[nextY_1][nextX_1] == 1 || scene[nextY_1][nextX_1] == 2) ||
-                (scene[nextY_2][nextX_2] == 1 || scene[nextY_2][nextX_2] == 2) ||
-                (scene[nextY_3][nextX_3] == 1 || scene[nextY_3][nextX_3] == 2) ||
-                (scene[nextY_4][nextX_4] == 1 || scene[nextY_4][nextX_4] == 2));
+        return !((scene[nextY_1][nextX_1] >=1 || scene[nextY_1][nextX_1] <=3) ||
+                (scene[nextY_2][nextX_2] >= 1 || scene[nextY_2][nextX_2] <=3) ||
+                (scene[nextY_3][nextX_3] >= 1 || scene[nextY_3][nextX_3] <= 3) ||
+                (scene[nextY_4][nextX_4] >= 1 || scene[nextY_4][nextX_4] <= 3));
     }
 
     protected boolean isCollide(List<AnimatedEntity> entities, int newX, int newY) {
         int tempX, tempY;
         for (AnimatedEntity i : entities) {
-            if (i.getId() != this.id) {
+            if (i.getId() != this.id && !(i instanceof Bomberman)) {
                 tempX = i.getX();
                 tempY = i.getY();
                 if (Math.abs(tempX - newX) < 32 && Math.abs(tempY - newY) < 32) {

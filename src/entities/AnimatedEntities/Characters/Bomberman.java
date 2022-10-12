@@ -42,53 +42,53 @@ public class Bomberman extends Character {
         }
         if (up) {
             moving = true;
-            if (x % SCALED_SIZE == 0 && isFree(x, y - speed) && !isCollide(entities, x, y - speed)) y -= speed;
+            if (x % SCALED_SIZE == 0 && isFree(x, y - speed)) y -= speed;
             else {
                 if (x % SCALED_SIZE < 15) {
                     tempX = x - x % SCALED_SIZE;
-                    if (isFree(tempX, y - speed) && !isCollide(entities, x - speed, y)) x -= speed;
+                    if (isFree(tempX, y - speed)) x -= speed;
                 } else if (x % SCALED_SIZE > 17) {
                     tempX = x - x % SCALED_SIZE + 32;
-                    if (isFree(tempX, y - speed) && !isCollide(entities, x + speed, y)) x += speed;
+                    if (isFree(tempX, y - speed)) x += speed;
                 }
             }
         }
         if (down) {
             moving = true;
-            if (x % SCALED_SIZE == 0 && isFree(x, y + speed) && !isCollide(entities, x, y + speed)) y += speed;
+            if (x % SCALED_SIZE == 0 && isFree(x, y + speed)) y += speed;
             else {
                 if (x % SCALED_SIZE < 15) {
                     tempX = x - x % SCALED_SIZE;
-                    if (isFree(tempX, y + speed) && !isCollide(entities, x - speed, y)) x -= speed;
+                    if (isFree(tempX, y + speed)) x -= speed;
                 } else if (x % SCALED_SIZE > 17) {
                     tempX = x - x % SCALED_SIZE + 32;
-                    if (isFree(tempX, y + speed) && !isCollide(entities, x + speed, y)) x += speed;
+                    if (isFree(tempX, y + speed)) x += speed;
                 }
             }
         }
         if (right) {
             moving = true;
-            if (y % SCALED_SIZE == 0 && isFree(x + speed, y) && !isCollide(entities, x + speed, y)) x += speed;
+            if (y % SCALED_SIZE == 0 && isFree(x + speed, y)) x += speed;
             else {
                 if (y % SCALED_SIZE < 15) {
                     tempY = y - y % SCALED_SIZE;
-                    if (isFree(x + speed, tempY) && !isCollide(entities, x, y - speed)) y -= speed;
+                    if (isFree(x + speed, tempY)) y -= speed;
                 } else if (y % SCALED_SIZE > 17) {
                     tempY = y - y % SCALED_SIZE + 32;
-                    if (isFree(x + speed, tempY) && !isCollide(entities, x, y + speed)) y += speed;
+                    if (isFree(x + speed, tempY)) y += speed;
                 }
             }
         }
         if (left) {
             moving = true;
-            if (y % SCALED_SIZE == 0 && isFree(x - speed, y) && !isCollide(entities, x - speed, y)) x -= speed;
+            if (y % SCALED_SIZE == 0 && isFree(x - speed, y)) x -= speed;
             else {
                 if (y % SCALED_SIZE < 15) {
                     tempY = y - y % SCALED_SIZE;
-                    if (isFree(x - speed, tempY) && !isCollide(entities, x, y - speed)) y -= speed;
+                    if (isFree(x - speed, tempY)) y -= speed;
                 } else if (y % SCALED_SIZE > 17) {
                     tempY = y - y % SCALED_SIZE + 32;
-                    if (isFree(x - speed, tempY) && !isCollide(entities, x, y - speed)) y += speed;
+                    if (isFree(x - speed, tempY)) y += speed;
                 }
             }
         }
@@ -155,6 +155,7 @@ public class Bomberman extends Character {
         } else {
             bomber.setImg(player_down.getFxImage());
         }
+        //System.out.println(x + " " + y);
     }
 
     private boolean isFree(int nextX, int nextY) {
@@ -206,5 +207,25 @@ public class Bomberman extends Character {
             }
         }
         return false;
+    }
+
+    public boolean isDead() {
+        for (AnimatedEntity i : entities) {
+            if (i.getId() != this.id) {
+                if (((i.getX() - this.x) < 24 && (i.getX() - this.x > -32)) && Math.abs(i.getY() - this.y) < 32) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public void checkDead() {
+        for (AnimatedEntity i : entities) {
+            if (i instanceof Bomberman && i.isDead()) {
+                i.setX(32);
+                i.setY(32);
+            }
+        }
     }
 }
