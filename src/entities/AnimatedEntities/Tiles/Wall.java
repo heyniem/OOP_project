@@ -1,6 +1,8 @@
 package entities.AnimatedEntities.Tiles;
 import entities.Entity;
 
+import static graphics.Sprite.*;
+
 import javafx.scene.image.Image;
 
 public class Wall extends Tiles {
@@ -11,6 +13,6 @@ public class Wall extends Tiles {
 
     @Override
     public void update() {
-
+        setImg(wall.getFxImage());
     }
 }

@@ -3,6 +3,7 @@ import entities.AnimatedEntities.Characters.Bomberman;
 import entities.AnimatedEntities.Characters.Enemies.Balloon;
 import entities.AnimatedEntities.Characters.Enemies.Ghost;
 import entities.AnimatedEntities.Tiles.Items.BombItem;
+import entities.AnimatedEntities.Tiles.SoftWall;
 import entities.AnimatedEntities.Weapons.Bomb.Bomb;
 import entities.AnimatedEntities.Weapons.Bomb.BombFlame;
 import javafx.animation.AnimationTimer;
@@ -11,6 +12,7 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import entities.Entity;
 import entities.AnimatedEntities.Tiles.Path;
@@ -59,6 +61,7 @@ public class Main extends Application {
 
         // Create scene
         Scene scene = new Scene(root);
+        scene.setFill(Color.LIME);
         keyHandle.checkKey(scene);
         stage.setScene(scene);
         stage.show();
@@ -115,7 +118,7 @@ public class Main extends Application {
                 if (scene[i][j] == 1) {
                     object = new Wall(j, i, Sprite.wall.getFxImage());
                 } else if (scene[i][j] == 2) {
-                    object = new Wall(j, i, Sprite.brick.getFxImage());
+                    object = new SoftWall(j, i, Sprite.brick.getFxImage());
                 } else if (scene[i][j] == 4 && numOfBombItem <=3) {
                     numOfBombItem++;
                     object = new BombItem(j, i, Sprite.powerup_bombs.getFxImage());
@@ -132,7 +135,13 @@ public class Main extends Application {
         for (Entity i : entities) {
             i.update();
         }
-        stillObjects.forEach(g->g.update());
+        for (int i = 0;i<stillObjects.size();i++) {
+            Entity temp = stillObjects.get(i);
+            temp.update();
+            if (!stillObjects.contains(temp)) {
+                i--;
+            }
+        }
         bombSetup();
     }
 
@@ -170,9 +179,16 @@ public class Main extends Application {
             bomb.timer.schedule(bomb.task, 4000);
             bombList.add(bomb);
         }
-
-        for (Bomb i : bombList) {
-            i.update();
+        else try {
+            for (int i = 0;i<bombList.size();i++) {
+                Bomb temp = bombList.get(i);
+                temp.update();
+                if (!bombList.contains(temp)) {
+                    i--;
+                }
+            }
+        } catch (Exception e) {
+            System.out.println(e.fillInStackTrace());
         }
     }
 

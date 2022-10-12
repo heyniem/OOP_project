@@ -15,9 +15,12 @@ public class SoftWall extends Tiles{
 
     @Override
     public void update() {
+        //System.out.println("Tiles updated.");
         if (isDestroyed) {
             System.out.println("This happened");
             indexDestroy++;
+        } else {
+            setImg(brick.getFxImage());
         }
         if (indexDestroy !=0) {
             if (indexDestroy / 4 == 0) {
@@ -34,6 +37,7 @@ public class SoftWall extends Tiles{
                     if (i.getX() == this.x && i.getY() == this.y) {
                         scene[this.y/SCALED_SIZE][this.x/SCALED_SIZE] = 0;
                         stillObjects.remove(this);
+                        break;
                     }
                 }
             }
