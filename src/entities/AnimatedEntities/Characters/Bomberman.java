@@ -8,16 +8,19 @@ import graphics.Sprite;
 import javafx.scene.image.Image;
 
 import java.util.List;
+import java.util.Timer;
 
 import static Database.Database.*;
 import static Database.Database.WIDTH;
 import static Input.KeyHandle.*;
+import static entities.Map.explodeScene;
 import static entities.Map.scene;
 import static graphics.Sprite.*;
 import static graphics.Sprite.player_down;
 
 public class Bomberman extends Character {
     public int framePlayer = 0, intervalPlayer = 4, indexPlayer = 0;
+    public int frameDead = 0, intervalDead = 6, indexDead = 0;
     public boolean moving;
     private final int speed = 2;
     private int tempX, tempY;
@@ -28,6 +31,19 @@ public class Bomberman extends Character {
 
     @Override
     public void update() {
+        if (dead) {
+            this.setX(32);
+            this.setY(32);
+            dead = false;
+        }
+        if (!moving) {
+            isFree(x, y);
+            if (dead) {
+                this.setX(32);
+                this.setY(32);
+                dead = false;
+            }
+        }
         moving = false;
         boolean temp1 = false, temp2 = false;
         if (up && down) {
@@ -101,6 +117,30 @@ public class Bomberman extends Character {
             down = true;
         }
 
+        /*if (bomber.isDead()) {
+            moving = false;
+            right = false;
+            left = false;
+            up = false;
+            down = false;
+            frameDead++;
+            if (frameDead == intervalDead) {
+                frameDead = 0;
+                indexDead++;
+                if (indexDead == 4) {
+                    indexDead = 0;
+                }
+            }
+        }*/
+
+        /*if (indexDead == 1) {
+            bomber.setImg(player_dead1.getFxImage());
+        } else if (indexDead == 2) {
+            bomber.setImg(player_dead2.getFxImage());
+        } else if (indexDead == 3) {
+            bomber.setImg(player_dead3.getFxImage());
+        }*/
+
         if (moving) {
             framePlayer++;
             if (framePlayer > intervalPlayer) {
@@ -155,7 +195,6 @@ public class Bomberman extends Character {
         } else {
             bomber.setImg(player_down.getFxImage());
         }
-        //System.out.println(x + " " + y);
     }
 
     private boolean isFree(int nextX, int nextY) {
@@ -171,20 +210,34 @@ public class Bomberman extends Character {
         int nextX_4 = (nextX + SCALED_SIZE - 1) / SCALED_SIZE;
         int nextY_4 = (nextY + SCALED_SIZE - 1) / SCALED_SIZE;
 
+        if (explodeScene[nextY_1][nextX_1] >= 1 || explodeScene[nextY_2][nextX_2] >= 1
+                || explodeScene[nextY_3][nextX_3] >= 1 || explodeScene[nextY_4][nextX_4] >= 1) {
+            dead = true;
+            return false;
+        }
+
         if (scene[nextY_1][nextX_1] == 4 || scene[nextY_2][nextX_2] == 4
                 || scene[nextY_3][nextX_3] == 4 || scene[nextY_4][nextX_4] == 4) {
             if (scene[nextY_1][nextX_1] == 4) {
                 Entity object = new Path(nextX_1, nextY_1, Sprite.grass.getFxImage());
                 stillObjects.set(nextY_1 * WIDTH + nextX_1, object);
+                scene[nextY_1][nextX_1] = 0;
+                maxBombRange++;
             } else if (scene[nextY_2][nextX_2] == 4) {
                 Entity object = new Path(nextX_2, nextY_2, Sprite.grass.getFxImage());
                 stillObjects.set(nextY_2 * WIDTH + nextX_2, object);
+                scene[nextY_2][nextX_2] = 0;
+                maxBombRange++;
             } else if (scene[nextY_3][nextX_3] == 4) {
                 Entity object = new Path(nextX_3, nextY_3, Sprite.grass.getFxImage());
                 stillObjects.set(nextY_3 * WIDTH + nextX_3, object);
+                scene[nextY_3][nextX_3] = 0;
+                maxBombRange++;
             } else if (scene[nextY_4][nextX_4] == 4) {
                 Entity object = new Path(nextX_4, nextY_4, Sprite.grass.getFxImage());
                 stillObjects.set(nextY_4 * WIDTH + nextX_4, object);
+                scene[nextY_4][nextX_4] = 0;
+                maxBombRange++;
             }
         }
 

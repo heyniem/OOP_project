@@ -19,16 +19,16 @@ public class Database {
     public static int numOfBombItem = 0;
 
     public static int maxBomb = 2;
-    public static int maxBombRange = 5;
+    public static int maxBombRange = 1;
 
     // animate bomb
     public static final int intervalBomb = 5;
 
     // animate bomb explode
 
+    public static boolean dead = false;
+
     public static int intervalExplode = 11;
-
-
 
     public static Image menu = new Image("menu.png");
     public static Entity menuObj = new Portal(0, 0, menu);
