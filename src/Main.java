@@ -27,6 +27,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import static Database.Database.*;
+import static Input.KeyHandle.click;
 import static Input.KeyHandle.placeBomb;
 import static entities.Map.scene;
 import static graphics.Sprite.*;
@@ -83,7 +84,7 @@ public class Main extends Application {
                     preTimeCount = timeCount;
                 }
                 try {
-                    Thread.sleep(1000/fps - diff-1);
+                    Thread.sleep(1000/fps - diff-2);
                 } catch (Exception e) {
                     System.out.println(e);
                 }
@@ -150,17 +151,18 @@ public class Main extends Application {
         stillObjects.forEach(g->g.render(gc));
         entities.forEach(g -> g.render(gc));
         bombList.forEach(g -> g.render(gc));
+        if (!click) menuObj.render(gc);
     }
 
     public void createMonsters() {
         Random randomGen = new Random();
         AnimatedEntity object;
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 3 ; i++) {
             while(true) {
                 int ranx = randomGen.nextInt(18);
                 int rany = randomGen.nextInt(13);
                 if ((ranx >=2 || rany >=2) && scene[rany+1][ranx+1] == 0) {
-                    object = new Ghost(ranx+1, rany+1, Sprite.ghost_left1.getFxImage(), i+1);
+                    object = new Balloon(ranx+1, rany+1, balloom_left1.getFxImage(), i+1);
                     entities.add(object);
                     break;
                 }
@@ -175,7 +177,7 @@ public class Main extends Application {
         if (placeBomb && bombList.size() < maxBomb && scene[y1][x1] != 3) {
             Bomb bomb = new Bomb(x1, y1, Sprite.bomb_0.getFxImage(), bombList.size() * 100 + 30);
             scene[y1][x1] = 3;
-            //moveEnermyBack(x1 * 32, y1 * 32);
+            //moveEnermyBack(x1 * SCALED_SIZE, y1 * SCALED_SIZE);
             bomb.timer.schedule(bomb.task, 4000);
             bombList.add(bomb);
         }

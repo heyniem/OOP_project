@@ -12,7 +12,7 @@ import static graphics.Sprite.*;
 import static entities.Map.*;
 
 public class Ghost extends Enemy{
-    public int frameGhost = 0, intervalGhost = 6, indexGhost = 0;
+    public int frameGhost = 0, intervalGhost = 5, indexGhost = 0;
     private int direction = 1;
     private int temp;
     SuperDumbAI ghostAI = new SuperDumbAI();
@@ -33,28 +33,28 @@ public class Ghost extends Enemy{
             if (frameGhost > intervalGhost) {
                 frameGhost = 0;
                 indexGhost++;
-                if (indexGhost > 2) {
+                if (indexGhost > 3) {
                     indexGhost = 0;
                 }
             }
             if (direction == 2 || direction == 1) {
-                if (indexGhost == 0) {
+                if (indexGhost == 1) {
                     this.img = ghost_right1.getFxImage();
                 }
-                if (indexGhost == 1) {
+                if (indexGhost == 2) {
                     this.img = ghost_right2.getFxImage();
                 }
-                if (indexGhost == 2) {
+                if (indexGhost == 3) {
                     this.img = ghost_right3.getFxImage();
                 }
             } else if (direction == 3 || direction == 0) {
-                if (indexGhost == 0) {
+                if (indexGhost == 1) {
                     this.img = ghost_left1.getFxImage();
                 }
-                if (indexGhost == 1) {
+                if (indexGhost == 2) {
                     this.img = ghost_left2.getFxImage();
                 }
-                if (indexGhost == 2) {
+                if (indexGhost == 3) {
                     this.img = ghost_left3.getFxImage();
                 }
             }

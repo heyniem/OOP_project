@@ -30,10 +30,10 @@ public abstract class Enemy extends Character {
         int nextX_4 = (nextX + SCALED_SIZE - 1) / SCALED_SIZE;
         int nextY_4 = (nextY + SCALED_SIZE - 1) / SCALED_SIZE;
 
-        return !((scene[nextY_1][nextX_1] >=1 || scene[nextY_1][nextX_1] <=3) ||
-                (scene[nextY_2][nextX_2] >= 1 || scene[nextY_2][nextX_2] <=3) ||
-                (scene[nextY_3][nextX_3] >= 1 || scene[nextY_3][nextX_3] <= 3) ||
-                (scene[nextY_4][nextX_4] >= 1 || scene[nextY_4][nextX_4] <= 3));
+        return !((scene[nextY_1][nextX_1] >=1 && scene[nextY_1][nextX_1] <=3) ||
+                (scene[nextY_2][nextX_2] >= 1 && scene[nextY_2][nextX_2] <=3) ||
+                (scene[nextY_3][nextX_3] >= 1 && scene[nextY_3][nextX_3] <= 3) ||
+                (scene[nextY_4][nextX_4] >= 1 && scene[nextY_4][nextX_4] <= 3));
     }
 
     protected boolean isCollide(List<AnimatedEntity> entities, int newX, int newY) {

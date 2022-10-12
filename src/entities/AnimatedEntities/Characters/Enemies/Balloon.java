@@ -1,5 +1,6 @@
 package entities.AnimatedEntities.Characters.Enemies;
 
+import AI.AIEnemies.SmartAI;
 import AI.AIEnemies.SuperDumbAI;
 import entities.AnimatedEntities.AnimatedEntity;
 import javafx.scene.image.Image;
@@ -12,9 +13,10 @@ import static graphics.Sprite.*;
 
 public class Balloon extends Enemy {
     public int frameBalloon = 0, intervalBalloon = 6, indexBalloon = 0;
-    private int direction = 1;
+    private int direction = 3;
     private int temp;
-    SuperDumbAI balloonAI = new SuperDumbAI();
+    SmartAI balloonAI = new SmartAI();
+    //SuperDumbAI balloonAI = new SuperDumbAI();
 
     public Balloon(int xUnit, int yUnit, Image img, int id) {
         super(xUnit, yUnit, img, id);
@@ -22,8 +24,9 @@ public class Balloon extends Enemy {
 
     @Override
     public void update() {
-        if (x % SCALED_SIZE == 0 && y % SCALED_SIZE == 0 && ((x / SCALED_SIZE) % 2 == 1 && (y / SCALED_SIZE) % 2 == 1)) {
-            direction = balloonAI.chooseDirection(direction,  64);
+        if (x % SCALED_SIZE == 0 && y % SCALED_SIZE == 0) {
+            direction = balloonAI.chooseDirection(this.x, this.y, direction, 76);
+            //direction = balloonAI.chooseDirection(direction, 76);
         }
         temp = direction;
         while (true) {
@@ -87,6 +90,7 @@ public class Balloon extends Enemy {
             }
             if (direction == temp) break;
         }
+        //System.out.println(direction);
     }
 
 

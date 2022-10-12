@@ -6,7 +6,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
 public class KeyHandle {
-    public static boolean up = false, right = false, left = false, down = false, placeBomb = false;
+    public static boolean up = false, right = false, left = false, down = false, placeBomb = false, click = false;
     public void keyHandle(){};
     public void checkKey(Scene scene) {
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
@@ -18,6 +18,7 @@ public class KeyHandle {
                 if (code == KeyCode.A) left = true;
                 if (code == KeyCode.D) right = true;
                 if (code == KeyCode.X) placeBomb = true;
+                if (code == KeyCode.ENTER) click = true;
             }
         });
         scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
