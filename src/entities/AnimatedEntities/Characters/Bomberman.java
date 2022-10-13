@@ -223,6 +223,7 @@ public class Bomberman extends Character {
                 tempX = i.getX();
                 tempY = i.getY();
                 if (Math.abs(tempX - newX) < 32 && Math.abs(tempY - newY) < 32) {
+                    sound.StopMusic();
                     return true;
                 }
             }
@@ -234,6 +235,8 @@ public class Bomberman extends Character {
         for (AnimatedEntity i : entities) {
             if (i.getId() != this.id) {
                 if (((i.getX() - this.x) < 24 && (i.getX() - this.x > -32)) && Math.abs(i.getY() - this.y) < 32) {
+                    sound.StopMusic();
+                    sound.playSingleEp(3);
                     return true;
                 }
             }
@@ -258,6 +261,8 @@ public class Bomberman extends Character {
                 (explodeScene[nextY_2][nextX_2] >= 1) ||
                 (explodeScene[nextY_3][nextX_3] >= 1) ||
                 (explodeScene[nextY_4][nextX_4] >= 1))) {
+            sound.StopMusic();
+            sound.playSingleEp(2);
             dead = true;
         }
         if (this.isDead()) {

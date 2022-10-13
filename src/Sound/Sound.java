@@ -12,20 +12,16 @@ public class Sound {
     URL soundURL[] = new URL[30];
 
     public Sound() {
-        soundURL[0] = getClass().getResource("/audio/bomb.wav");
-        soundURL[1] = getClass().getResource("/audio/destroy.wav");
-        soundURL[2] = getClass().getResource("/audio/die.wav");
-        soundURL[3] = getClass().getResource("/audio/drop.wav");
-        soundURL[4] = getClass().getResource("/audio/item.wav");
-        soundURL[5] = getClass().getResource("/audio/kill.wav");
-        soundURL[6] = getClass().getResource("/audio/level.wav");
-        soundURL[7] = getClass().getResource("/audio/lose.wav");
-        soundURL[8] = getClass().getResource("/audio/intro.wav");
-        soundURL[9] = getClass().getResource("/audio/walk.wav");
-        soundURL[10] = getClass().getResource("/audio/win.wav");
-        soundURL[11] = getClass().getResource("/audio/homestart.wav");
-        soundURL[12] = getClass().getResource("/audio/putbomb.wav");
-        soundURL[13] = getClass().getResource("/audio/gameaudio.wav");
+        soundURL[0] = getClass().getResource("/audio/boom.wav");
+        soundURL[1] = getClass().getResource("/audio/clear.wav");
+        soundURL[2] = getClass().getResource("/audio/dead1.wav");
+        soundURL[3] = getClass().getResource("/audio/dead2.wav");
+        soundURL[4] = getClass().getResource("/audio/gameaudio.wav");
+        soundURL[5] = getClass().getResource("/audio/intro.wav");
+        soundURL[6] = getClass().getResource("/audio/putbomb.wav");
+        soundURL[7] = getClass().getResource("/audio/win.wav");
+        soundURL[8] = getClass().getResource("/audio/getitem.wav");
+
     }
 
     public void setFile(int i) {

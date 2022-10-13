@@ -22,7 +22,9 @@ public class Portal extends Tiles{
             displayed = true;
         }
         if (displayed && bomber.getX() == x && bomber.getY() == y) {
+
             if (entities.size() == 1) {
+                sound.playSingleEp(7);
                 checkWin = true;
                 Iswin = true;
             }

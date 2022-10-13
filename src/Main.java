@@ -1,3 +1,4 @@
+import Database.Database;
 import entities.AnimatedEntities.AnimatedEntity;
 import entities.AnimatedEntities.Characters.Enemies.Oreal;
 import entities.AnimatedEntities.Tiles.Items.BombItem;
@@ -108,6 +109,7 @@ public class Main extends Application {
 
         createMap();
         createMonsters();
+        sound.PlayMusic(4);
     }
 
     public void createMap() {
@@ -311,6 +313,7 @@ public class Main extends Application {
         int x1 = (bomber.getX() + 16) / SCALED_SIZE;
         int y1 = (bomber.getY() + 16) / SCALED_SIZE;
         if (placeBomb && bombList.size() < maxBomb && scene[y1][x1] != 3) {
+            sound.playSingleEp(6);
             Bomb bomb = new Bomb(x1, y1, Sprite.bomb_0.getFxImage(), bombList.size() * 100 + 30);
             scene[y1][x1] = 3;
             bomb.timer.schedule(bomb.task, 2500);

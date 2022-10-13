@@ -23,11 +23,13 @@ public class Bomb extends Weapon {
         @Override
         public void run() {
             checkBombExplode = true;
+            sound.playSingleEp(0);
         }
     };
     List<BombFlame> bombFlameList = new ArrayList<>();
 
     public int frameBomb = 0;
+
     public int indexBomb = 2;
 
     public int countFrameExplode = 0;

@@ -21,6 +21,7 @@ public class Item extends Tiles {
             displayed = true;
         }
         if (displayed && (bomber.getX() - x < 32 && bomber.getX() - x > -24) && (bomber.getY() - y < 32 && bomber.getY() - y > -32)) {
+            sound.playSingleEp(8);
             if (this instanceof BombItem) {
                 maxBomb++;
                 ItemList.remove(this);
