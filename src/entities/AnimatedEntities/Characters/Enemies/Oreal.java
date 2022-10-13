@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Random;
 
 import static Database.Database.entities;
+import static Database.Database.score;
 import static graphics.Sprite.*;
 import static graphics.Sprite.balloom_left3;
 
@@ -32,7 +33,10 @@ public class Oreal extends Enemy {
         if (dead) {
             intervalDead++;
             if (intervalDead <= 11) setImg(oneal_dead.getFxImage());
-            else entities.remove(this);
+            else {
+                score += 100;
+                entities.remove(this);
+            }
         }
         else {
             if (x % SCALED_SIZE == 0 && y % SCALED_SIZE == 0) {
@@ -42,8 +46,6 @@ public class Oreal extends Enemy {
                 else {
                     direction = OrealAI2.chooseDirection(this.x, this.y, direction, 64);
                 }
-                //direction = balloonAI.chooseDirection(this.x, this.y, direction, 76);
-                //direction = OrealAI.chooseDirection(direction, 64);
             }
             temp = direction;
             while (true) {
@@ -107,7 +109,6 @@ public class Oreal extends Enemy {
                 }
                 if (direction == temp) break;
             }
-            //System.out.println(direction);
         }
     }
 

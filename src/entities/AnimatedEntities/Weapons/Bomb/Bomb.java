@@ -1,13 +1,10 @@
 package entities.AnimatedEntities.Weapons.Bomb;
 
-import entities.AnimatedEntities.Tiles.SoftWall;
 import entities.AnimatedEntities.Weapons.Weapon;
 import entities.Entity;
 import graphics.Sprite;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-
-import static entities.Map.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +12,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import static Database.Database.*;
+import static entities.Map.explodeScene;
+import static entities.Map.scene;
 import static graphics.Sprite.*;
 
 public class Bomb extends Weapon {
@@ -36,10 +35,6 @@ public class Bomb extends Weapon {
     public boolean checkBombExplode = false;
     public boolean checkBombFlame;
     public boolean bomb_explode = false;
-
-    private int bombFrame = 0;
-    private int bombInterval = 0;
-    private boolean explode;
 
     public Bomb(int xUnit, int yUnit, Image img, int id) {
         super(xUnit, yUnit, img, id);

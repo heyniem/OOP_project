@@ -1,28 +1,24 @@
 package entities.AnimatedEntities.Characters;
 
 import entities.AnimatedEntities.AnimatedEntity;
-
 import entities.AnimatedEntities.Tiles.Path;
 import entities.Entity;
 import graphics.Sprite;
 import javafx.scene.image.Image;
 
 import java.util.List;
-import java.util.Timer;
 
 import static Database.Database.*;
-import static Database.Database.WIDTH;
 import static Input.KeyHandle.*;
 import static entities.Map.explodeScene;
 import static entities.Map.scene;
 import static graphics.Sprite.*;
-import static graphics.Sprite.player_down;
 
 public class Bomberman extends Character {
     public int framePlayer = 0, intervalPlayer = 4, indexPlayer = 0;
-    public int frameDead = 0, intervalDead = 0, indexDead = 0;
+    public int  intervalDead = 0;
     public boolean moving;
-    private final int speed = (int) Math.pow(2, noOfSpeedItem);
+    private final int speed = 4;
     private int tempX, tempY;
 
     public Bomberman(int xUnit, int yUnit, Image img, int id) {
@@ -187,12 +183,6 @@ public class Bomberman extends Character {
 
         int nextX_4 = (nextX + SCALED_SIZE - 1) / SCALED_SIZE;
         int nextY_4 = (nextY + SCALED_SIZE - 1) / SCALED_SIZE;
-
-//        if (explodeScene[nextY_1][nextX_1] >= 1 || explodeScene[nextY_2][nextX_2] >= 1
-//                || explodeScene[nextY_3][nextX_3] >= 1 || explodeScene[nextY_4][nextX_4] >= 1) {
-//            dead = true;
-//            return false;
-//        }
 
         if (scene[nextY_1][nextX_1] == 4 || scene[nextY_2][nextX_2] == 4
                 || scene[nextY_3][nextX_3] == 4 || scene[nextY_4][nextX_4] == 4) {
