@@ -1,12 +1,9 @@
 import entities.AnimatedEntities.AnimatedEntity;
-import entities.AnimatedEntities.Characters.Bomberman;
-import entities.AnimatedEntities.Characters.Enemies.Balloon;
-import entities.AnimatedEntities.Characters.Enemies.Ghost;
 import entities.AnimatedEntities.Characters.Enemies.Oreal;
-import entities.AnimatedEntities.Tiles.Items.BombItem;
+import entities.AnimatedEntities.Tiles.Items.*;
+import entities.AnimatedEntities.Tiles.Portal;
 import entities.AnimatedEntities.Tiles.SoftWall;
 import entities.AnimatedEntities.Weapons.Bomb.Bomb;
-import entities.AnimatedEntities.Weapons.Bomb.BombFlame;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Group;
@@ -19,13 +16,8 @@ import entities.Entity;
 import entities.AnimatedEntities.Tiles.Path;
 import entities.AnimatedEntities.Tiles.Wall;
 import graphics.Sprite;
-import Database.Database.*;
-import entities.AnimatedEntities.Weapons.Bomb.Bomb;
 
 import java.util.Random;
-import java.util.Stack;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import static Database.Database.*;
 import static Input.KeyHandle.click;
@@ -98,21 +90,100 @@ public class Main extends Application {
     }
 
     public void createMap() {
+        Random randomGen = new Random();
         for (int i = 0; i < HEIGHT; i++) {
             for (int j = 0; j < WIDTH; j++) {
                 if (scene[i][j] == 0) {
                     int ran = new Random().nextInt(15);
-                    if (ran <= 1) {
+                    if (ran <= 7) {
                         scene[i][j] = 2;
-                    } else if (ran == 2){
-                        scene[i][j] = 4;
                     }
                 }
             }
         }
+
         scene[1][1] = 0;
-        scene[2][1] = 2;
+        scene[2][1] = 0;
         scene[1][2] = 0;
+        for (int i = 0;i < 2;i++) {
+            while(true) {
+                int x = randomGen.nextInt(WIDTH - 2) + 1;
+                int y = randomGen.nextInt(HEIGHT - 2) + 1;
+                boolean check = true;
+                for (Item entity  : ItemList) {
+                    if (entity.getX() == x * SCALED_SIZE && entity.getY() == y * SCALED_SIZE) {
+                        check = false;
+                        break;
+                    }
+                }
+                if (scene[y][x] == 2 && check) {
+                    Item bombItem = new BombItem(x, y, powerup_bombs.getFxImage());
+                    ItemList.add(bombItem);
+                    break;
+                }
+            }
+        }
+        //System.out.println("Step 1 done");
+        for (int i = 0;i < 5;i++) {
+            while(true) {
+                int x = randomGen.nextInt(WIDTH - 2) + 1;
+                int y = randomGen.nextInt(HEIGHT - 2) + 1;
+                boolean check = true;
+                for (Item entity : ItemList) {
+                    if (entity.getX() == x * SCALED_SIZE && entity.getY() == y * SCALED_SIZE) {
+                        check = false;
+                        break;
+                    }
+                }
+                if (scene[y][x] == 2 && check) {
+                    Item flameItem = new FlameItem(x, y, powerup_flames.getFxImage());
+                    ItemList.add(flameItem);
+                    break;
+                }
+            }
+        }
+
+        for (int i = 0;i < 2;i++) {
+            while(true) {
+                int x = randomGen.nextInt(WIDTH - 2) + 1;
+                int y = randomGen.nextInt(HEIGHT - 2) + 1;
+                boolean check = true;
+                for (Entity entity : ItemList) {
+                    if (entity.getX() == x * SCALED_SIZE && entity.getY() == y * SCALED_SIZE) {
+                        check = false;
+                        break;
+                    }
+                }
+                if (scene[y][x] == 2 && check) {
+                    Item speedItem = new SpeedItem(x, y, powerup_speed.getFxImage());
+                    ItemList.add(speedItem);
+                    break;
+                }
+            }
+        }
+        //Create Portal
+        while(true) {
+            int x = randomGen.nextInt(WIDTH - 2) + 1;
+            int y = randomGen.nextInt(HEIGHT - 2) + 1;
+            boolean check = true;
+            for (Item entity  : ItemList) {
+                if (entity.getX() == x * SCALED_SIZE && entity.getY() == y * SCALED_SIZE) {
+                    check = false;
+                    break;
+                }
+            }
+            if (scene[y][x] == 2 && check) {
+                gamePortal.setX(x * SCALED_SIZE);
+                gamePortal.setY(y * SCALED_SIZE);
+                break;
+            }
+        }
+        //Print item list
+        for (Item entity : ItemList) {
+            System.out.println(entity.getY()/SCALED_SIZE + " - " +  entity.getX()/SCALED_SIZE + " - " + entity.getClass());
+        }
+        System.out.println(gamePortal.getY()/SCALED_SIZE + " - " +  gamePortal.getX()/SCALED_SIZE);
+
 
         for (int i = 0; i < HEIGHT; i++) {
             for (int j = 0; j < WIDTH; j++) {
@@ -121,9 +192,6 @@ public class Main extends Application {
                     object = new Wall(j, i, Sprite.wall.getFxImage());
                 } else if (scene[i][j] == 2) {
                     object = new SoftWall(j, i, Sprite.brick.getFxImage());
-                } else if (scene[i][j] == 4 && numOfBombItem <=3) {
-                    numOfBombItem++;
-                    object = new BombItem(j, i, Sprite.powerup_bombs.getFxImage());
                 } else {
                     object = new Path(j, i, Sprite.grass.getFxImage());
                 }
@@ -150,6 +218,14 @@ public class Main extends Application {
                     i--;
                 }
             }
+            for (int i = 0; i < ItemList.size(); i++) {
+                Entity temp = ItemList.get(i);
+                temp.update();
+                if (!ItemList.contains(temp)) {
+                    i--;
+                }
+            }
+            gamePortal.update();
             bombSetup();
         }
     }
@@ -157,8 +233,11 @@ public class Main extends Application {
     public void render() {
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
         stillObjects.forEach(g->g.render(gc));
+        gamePortal.render(gc);
         entities.forEach(g -> g.render(gc));
         bombList.forEach(g -> g.render(gc));
+        ItemList.forEach(g -> g.render(gc));
+
         if (!click) menuObj.render(gc);
         if (bomber.dead && gameOver) {
             endObj.render(gc);
@@ -168,7 +247,7 @@ public class Main extends Application {
     public void createMonsters() {
         Random randomGen = new Random();
         AnimatedEntity object;
-        for (int i = 0; i < 3 ; i++) {
+        for (int i = 0; i < 5 ; i++) {
             while(true) {
                 int ranx = randomGen.nextInt(18);
                 int rany = randomGen.nextInt(13);

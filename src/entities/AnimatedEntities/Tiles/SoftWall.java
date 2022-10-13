@@ -16,7 +16,6 @@ public class SoftWall extends Tiles {
 
     @Override
     public void update() {
-        //System.out.println("Tiles updated.");
         if (isDestroyed) {
             //System.out.println("This happened");
             indexDestroy++;
