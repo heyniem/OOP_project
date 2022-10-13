@@ -22,7 +22,7 @@ public class Portal extends Tiles{
         }
         if (displayed && bomber.getX() == x && bomber.getY() == y) {
             if (entities.size() == 1) {
-                System.out.println("You win");
+                win = true;
             }
         }
     }

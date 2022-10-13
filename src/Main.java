@@ -63,24 +63,24 @@ public class Main extends Application {
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long l) {
-                long firstTime = System.currentTimeMillis();
-                render();
-                update(stage);
-                afterUpdate();
-                //Check time diff to place cd time.
-                long diff = System.currentTimeMillis() - firstTime;
-                timeCount++;
-                long temp = System.currentTimeMillis() - start;
-                if (temp/1000 == sec) {
-                    if(sec!=0) stage.setTitle("Bomberman, fps=" + (timeCount-preTimeCount));
-                    sec++;
-                    preTimeCount = timeCount;
-                }
-                try {
-                    Thread.sleep(1000/fps - diff-2);
-                } catch (Exception e) {
-                    System.out.println(e);
-                }
+            long firstTime = System.currentTimeMillis();
+            render();
+            update(stage);
+            afterUpdate();
+            //Check time diff to place cd time.
+            long diff = System.currentTimeMillis() - firstTime;
+            timeCount++;
+            long temp = System.currentTimeMillis() - start;
+            if (temp/1000 == sec) {
+                if(sec!=0) stage.setTitle("Bomberman, fps=" + (timeCount-preTimeCount));
+                sec++;
+                preTimeCount = timeCount;
+            }
+            try {
+                Thread.sleep(1000/fps - diff-2);
+            } catch (Exception e) {
+                System.out.println(e);
+            }
             }
         };
         timer.start();
@@ -161,23 +161,23 @@ public class Main extends Application {
                 }
             }
         }
-        //Create Portal
-        while(true) {
-            int x = randomGen.nextInt(WIDTH - 2) + 1;
-            int y = randomGen.nextInt(HEIGHT - 2) + 1;
-            boolean check = true;
-            for (Item entity  : ItemList) {
-                if (entity.getX() == x * SCALED_SIZE && entity.getY() == y * SCALED_SIZE) {
-                    check = false;
-                    break;
-                }
-            }
-            if (scene[y][x] == 2 && check) {
-                gamePortal.setX(x * SCALED_SIZE);
-                gamePortal.setY(y * SCALED_SIZE);
-                break;
-            }
-        }
+//        //Create Portal
+//        while(true) {
+//            int x = randomGen.nextInt(WIDTH - 2) + 1;
+//            int y = randomGen.nextInt(HEIGHT - 2) + 1;
+//            boolean check = true;
+//            for (Item entity  : ItemList) {
+//                if (entity.getX() == x * SCALED_SIZE && entity.getY() == y * SCALED_SIZE) {
+//                    check = false;
+//                    break;
+//                }
+//            }
+//            if (scene[y][x] == 2 && check) {
+//                gamePortal.setX(x * SCALED_SIZE);
+//                gamePortal.setY(y * SCALED_SIZE);
+//                break;
+//            }
+//        }
         //Print item list
         for (Item entity : ItemList) {
             System.out.println(entity.getY()/SCALED_SIZE + " - " +  entity.getX()/SCALED_SIZE + " - " + entity.getClass());
@@ -205,7 +205,7 @@ public class Main extends Application {
         if (bomber.dead) {
             bomber.update();
         }
-        else {
+        else if (!win) {
             for (int i = 0; i < entities.size(); i++) {
                 Entity temp = entities.get(i);
                 temp.update();
@@ -242,12 +242,15 @@ public class Main extends Application {
         if (bomber.dead && gameOver) {
             endObj.render(gc);
         }
+        if (win) {
+            winObj.render(gc);
+        }
     }
 
     public void createMonsters() {
         Random randomGen = new Random();
         AnimatedEntity object;
-        for (int i = 0; i < 5 ; i++) {
+        for (int i = 0; i < 0 ; i++) {
             while(true) {
                 int ranx = randomGen.nextInt(18);
                 int rany = randomGen.nextInt(13);

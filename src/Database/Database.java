@@ -30,17 +30,22 @@ public class Database {
 
     // animate bomb explode
 
-    public static boolean dead = false;
+    //public static boolean dead = false;
     public static boolean gameOver = false;
+    public static boolean win = false;
 
     public static int intervalExplode = 11;
 
     public static Image menu = new Image("menu.png");
     public static Image end = new Image("gameover.png");
+
+    public static Image winScene = new Image("classic.png");
     public static Entity gamePortal = new Portal(1, 2, Sprite.portal.getFxImage(), false);
     public static Entity menuObj = new Portal(0, 0, menu, true);
 
     public static Entity endObj = new Portal(0, 0, end, true);
+
+    public static Entity winObj = new Portal(0, 0, winScene, true);
 
     public static AnimatedEntity bomber = new Bomberman(1, 1, Sprite.player_down.getFxImage(), 100);
 
