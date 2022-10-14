@@ -49,18 +49,16 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) {
-<<<<<<< HEAD
         text.setText("Score: ");
-        text.setFont(Font.font("SHOWCARD GOTHIC",24));
+        text.setFont(Font.font("SHOWCARD GOTHIC", 24));
         text.setX(16);
         text.setY(24);
 
         timeText.setText("Time: ");
-        timeText.setFont(Font.font("SHOWCARD GOTHIC",24));
+        timeText.setFont(Font.font("SHOWCARD GOTHIC", 24));
         timeText.setX(250);
         timeText.setY(24);
-=======
->>>>>>> 4826e78e9d07c69589e12e3e8ff196a63f0aab2e
+
 
         // Create Canvas
         canvas = new Canvas(Sprite.SCALED_SIZE * WIDTH, Sprite.SCALED_SIZE * HEIGHT);
@@ -80,7 +78,6 @@ public class Main extends Application {
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long l) {
-<<<<<<< HEAD
                 long firstTime = System.currentTimeMillis();
                 render();
                 update();
@@ -105,26 +102,6 @@ public class Main extends Application {
                 if (!click) {
                     menuObj.render(gc);
                 }
-=======
-            long firstTime = System.currentTimeMillis();
-            render();
-            update(stage);
-            afterUpdate();
-            //Check time diff to place cd time.
-            long diff = System.currentTimeMillis() - firstTime;
-            timeCount++;
-            long temp = System.currentTimeMillis() - start;
-            if (temp/1000 == sec) {
-                if(sec!=0) stage.setTitle("Bomberman, fps=" + (timeCount-preTimeCount));
-                sec++;
-                preTimeCount = timeCount;
-            }
-            try {
-                Thread.sleep(1000/fps - diff-2);
-            } catch (Exception e) {
-                System.out.println(e);
-            }
->>>>>>> 4826e78e9d07c69589e12e3e8ff196a63f0aab2e
             }
         };
         timer.start();
@@ -205,7 +182,6 @@ public class Main extends Application {
                 }
             }
         }
-<<<<<<< HEAD
         //Create Portal
         while (true) {
             int x = randomGen.nextInt(WIDTH - 2) + 1;
@@ -223,7 +199,6 @@ public class Main extends Application {
                 break;
             }
         }
-=======
 //        //Create Portal
 //        while(true) {
 //            int x = randomGen.nextInt(WIDTH - 2) + 1;
@@ -241,7 +216,6 @@ public class Main extends Application {
 //                break;
 //            }
 //        }
->>>>>>> 4826e78e9d07c69589e12e3e8ff196a63f0aab2e
         //Print item list
         for (Item entity : ItemList) {
             System.out.println(entity.getY() / SCALED_SIZE + " - " + entity.getX() / SCALED_SIZE + " - " + entity.getClass());
@@ -268,12 +242,7 @@ public class Main extends Application {
     public void update() {
         if (bomber.dead) {
             bomber.update();
-<<<<<<< HEAD
-        } else {
-=======
-        }
-        else if (!win) {
->>>>>>> 4826e78e9d07c69589e12e3e8ff196a63f0aab2e
+        } else if (!Iswin) {
             for (int i = 0; i < entities.size(); i++) {
                 Entity temp = entities.get(i);
                 temp.update();
@@ -315,25 +284,18 @@ public class Main extends Application {
         if (bomber.dead && gameOver) {
             endObj.render(gc);
         }
-<<<<<<< HEAD
         if (checkWin) {
-=======
-        if (win) {
->>>>>>> 4826e78e9d07c69589e12e3e8ff196a63f0aab2e
-            winObj.render(gc);
+            if (Iswin) {
+                winObj.render(gc);
+            }
         }
     }
 
     public void createMonsters() {
         Random randomGen = new Random();
         AnimatedEntity object;
-<<<<<<< HEAD
         for (int i = 0; i < 5; i++) {
             while (true) {
-=======
-        for (int i = 0; i < 0 ; i++) {
-            while(true) {
->>>>>>> 4826e78e9d07c69589e12e3e8ff196a63f0aab2e
                 int ranx = randomGen.nextInt(18);
                 int rany = randomGen.nextInt(13);
                 if ((ranx >= 2 || rany >= 2) && scene[rany + 1][ranx + 1] == 0) {
@@ -344,7 +306,6 @@ public class Main extends Application {
             }
         }
     }
-
 
     public void bombSetup() {
         int x1 = (bomber.getX() + 16) / SCALED_SIZE;
@@ -366,8 +327,6 @@ public class Main extends Application {
             System.out.println(e.fillInStackTrace());
         }
     }
-
-
     public void afterUpdate() {
         entities.forEach(AnimatedEntity::checkDead);
     }

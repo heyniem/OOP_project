@@ -33,25 +33,18 @@ public class Database {
 
     // animate bomb explode
 
-<<<<<<< HEAD
     public static int score = 0;
     public static int time = 300;
-=======
-    //public static boolean dead = false;
->>>>>>> 4826e78e9d07c69589e12e3e8ff196a63f0aab2e
     public static boolean gameOver = false;
-    public static boolean win = false;
+    public static boolean Iswin = false;
 
     public static int intervalExplode = 11;
 
     public static Image menu = new Image("menu.png");
     public static Image end = new Image("gameover.png");
 
-<<<<<<< HEAD
     public static Image win = new Image("win.png");
-=======
     public static Image winScene = new Image("classic.png");
->>>>>>> 4826e78e9d07c69589e12e3e8ff196a63f0aab2e
     public static Entity gamePortal = new Portal(1, 2, Sprite.portal.getFxImage(), false);
     public static Entity menuObj = new Portal(0, 0, menu, true);
 
@@ -59,14 +52,7 @@ public class Database {
     public static Entity winObj = new Portal(0, 0, win, true);
 
 
-<<<<<<< HEAD
     public static AnimatedEntity bomber = new Bomberman(1, 2, Sprite.player_down.getFxImage(), 100);
-=======
-    public static Entity winObj = new Portal(0, 0, winScene, true);
-
-    public static AnimatedEntity bomber = new Bomberman(1, 1, Sprite.player_down.getFxImage(), 100);
->>>>>>> 4826e78e9d07c69589e12e3e8ff196a63f0aab2e
-
 
     public static List<AnimatedEntity> entities = new ArrayList<>();
     public static List<Entity> stillObjects = new ArrayList<>();

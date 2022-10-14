@@ -23,11 +23,8 @@ public class Portal extends Tiles{
         }
         if (displayed && bomber.getX() == x && bomber.getY() == y) {
             if (entities.size() == 1) {
-<<<<<<< HEAD
                 checkWin = true;
-=======
-                win = true;
->>>>>>> 4826e78e9d07c69589e12e3e8ff196a63f0aab2e
+                Iswin = true;
             }
         }
     }
