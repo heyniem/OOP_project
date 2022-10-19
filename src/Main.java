@@ -43,6 +43,7 @@ public class Main extends Application {
 
     private Text text = new Text();
     private Text timeText = new Text();
+    private Text levelText = new Text();
 
 
     public static void main(String[] args) {
@@ -61,12 +62,17 @@ public class Main extends Application {
         timeText.setX(250);
         timeText.setY(24);
 
+        levelText.setText("Level: ");
+        levelText.setFont(Font.font("SHOWCARD GOTHIC", 24));
+        levelText.setX(500);
+        levelText.setY(24);
+
 
         // Create Canvas
         canvas = new Canvas(Sprite.SCALED_SIZE * WIDTH, Sprite.SCALED_SIZE * HEIGHT);
         gc = canvas.getGraphicsContext2D();
         // Create root container
-        Group root = new Group(text, timeText);
+        Group root = new Group(text, timeText, levelText);
         root.getChildren().add(canvas);
 
         // Create scene
@@ -259,6 +265,7 @@ public class Main extends Application {
             bombSetup();
             text.setText("Score: " + score);
             timeText.setText("Time: " + time);
+            levelText.setText("Level: " + level);
             if (time == 0) {
                 gameOver = true;
                 bomber.dead = true;
