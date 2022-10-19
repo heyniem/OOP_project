@@ -4,7 +4,8 @@ import AI.AIEnemies.DumbAI;
 import AI.AIEnemies.SuperDumbAI;
 import javafx.scene.image.Image;
 
-import static Database.Database.entities;
+import static Database.Database.*;
+import static entities.Map.scene;
 import static graphics.Sprite.*;
 import static graphics.Sprite.balloom_left3;
 
@@ -63,28 +64,28 @@ public class Kondoria extends Enemy {
                 }
             }
             if (direction == 1) {
-                if (isFree(x + 1, y)) {
+                if (isFree(x + 2, y)) {
                     this.x++;
                     break;
                 } else {
                     direction = 2;
                 }
             } else if (direction == 2) {
-                if (isFree(x, y + 1)) {
+                if (isFree(x, y + 2)) {
                     this.y++;
                     break;
                 } else {
                     direction = 3;
                 }
             } else if (direction == 3) {
-                if (isFree(x - 1, y)) {
+                if (isFree(x - 2, y)) {
                     this.x--;
                     break;
                 } else {
                     direction = 0;
                 }
             } else if (direction == 0) {
-                if (isFree(x, y - 1)) {
+                if (isFree(x, y - 2)) {
                     this.y--;
                     break;
                 } else {
@@ -96,4 +97,16 @@ public class Kondoria extends Enemy {
         //System.out.println(direction);
     }
 }
+
+    @Override
+    protected boolean isFree(int nextX, int nextY) {
+        if (nextX >= SCALED_SIZE && nextX <= SCALED_SIZE * (WIDTH-2) && nextY >= SCALED_SIZE && nextY < SCALED_SIZE * (HEIGHT - 2)) {
+            //System.out.println("Condition 1");
+            if (scene[nextY / SCALED_SIZE][nextX / SCALED_SIZE] == 3) {
+                return false;
+            }
+            else return true;
+        }
+        else return false;
+    }
 }

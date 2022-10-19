@@ -11,7 +11,7 @@ public class DumbAI extends AIEnemy{
         int bombX = bomber.getX()/SCALED_SIZE;
         int bombY = bomber.getY()/SCALED_SIZE;
 
-        if (Math.abs(tempX - bombX) < Math.abs(tempY - bombY)) {
+        if (Math.abs(tempX - bombX) > Math.abs(tempY - bombY)) {
             if (scene[tempY - 1][tempX] == 0 && Math.abs(tempY - 1 - bombY) < Math.abs(tempY - bombY)) {
                 System.out.println("up");
                 return 0;

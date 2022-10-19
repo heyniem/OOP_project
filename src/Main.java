@@ -362,6 +362,7 @@ public class Main extends Application {
             Iswin = false;
             checkWin = false;
             retry = false;
+            level = 1;
         }
         else if (nextLevel){
             entities.clear();
@@ -378,6 +379,7 @@ public class Main extends Application {
             Iswin = false;
             checkWin = false;
             nextLevel = false;
+            level++;
         }
     }
 }

@@ -24,6 +24,19 @@ public class Database {
 
     public static final int WIDTH = 20;
     public static final int HEIGHT = 16;
+    public static int level = 1;
+    public static int[][] monsterList = {
+            {0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0}
+    };
 
     public static int maxBomb = 1;
     public static int maxBombRange = 1;
