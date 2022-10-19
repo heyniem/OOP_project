@@ -1,7 +1,6 @@
 package entities;
 
 import entities.AnimatedEntities.Weapons.Bomb.Bomb;
-import javafx.scene.Parent;
 import javafx.scene.image.Image;
 
 import static Database.Database.*;

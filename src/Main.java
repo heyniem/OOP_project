@@ -1,9 +1,7 @@
 import Database.Database;
 import entities.AnimatedEntities.AnimatedEntity;
 import entities.AnimatedEntities.Characters.Bomberman;
-import entities.AnimatedEntities.Characters.Enemies.Balloon;
-import entities.AnimatedEntities.Characters.Enemies.Kondoria;
-import entities.AnimatedEntities.Characters.Enemies.Oreal;
+import entities.AnimatedEntities.Characters.Enemies.*;
 import entities.AnimatedEntities.Tiles.Items.BombItem;
 import entities.AnimatedEntities.Tiles.Items.FlameItem;
 import entities.AnimatedEntities.Tiles.Items.Item;
@@ -292,14 +290,40 @@ public class Main extends Application {
     public void createMonsters() {
         Random randomGen = new Random();
         AnimatedEntity object;
-        for (int i = 0; i < 0; i++) {
-            while (true) {
-                int ranx = randomGen.nextInt(18);
-                int rany = randomGen.nextInt(13);
-                if ((ranx >= 4 || rany >= 5) && scene[rany + 1][ranx + 1] == 0 ) {
-                    object = new Balloon(ranx + 1, rany + 1, kondoria_left1.getFxImage(), i + 1);
-                    entities.add(object);
-                    break;
+        for (int i = 0;i < 6;i++) {
+            for (int j = 0; j < monsterList[Math.min(level-1, 10)][i]; j++) {
+                while(true) {
+                    int temp = entities.size();
+                    int x = randomGen.nextInt(WIDTH - 2) + 1;
+                    int y = randomGen.nextInt(HEIGHT - 3) + 2;
+                    if (scene[y][x] == 0 && !checkMonster(x * SCALED_SIZE, y * SCALED_SIZE) && (y >= 5 || x >= 4)) {
+                        System.out.println("Monster " + i + " " + x + " " + y);
+                        switch (i) {
+                            case 0:
+                                object = new Balloon(x, y, Sprite.balloom_left1.getFxImage(), 10 * i + j);
+                                break;
+                            case 1:
+                                object = new Oreal(x, y, Sprite.oneal_left1.getFxImage(), 10 * i + j);
+                                break;
+                            case 2:
+                                object = new Doll(x, y, Sprite.doll_left1.getFxImage(), 10 * i + j);
+                                break;
+                            case 3:
+                                object = new Ghost(x, y, ghost_left1.getFxImage(), 10 * i + j);
+                                break;
+                            case 4:
+                                object = new Kondoria(x, y, Sprite.kondoria_left1.getFxImage(), 10 * i + j);
+                                break;
+                            case 5:
+                                object = new Ball(x, y, minvo_left1.getFxImage(), 10 * i + j);
+                                break;
+                            default:
+                                object = new Balloon(x, y, Sprite.balloom_left1.getFxImage(), 10 * i + j);
+                                break;
+                        }
+                        entities.add(object);
+                    }
+                    if (entities.size()!= temp) break;
                 }
             }
         }
@@ -381,5 +405,14 @@ public class Main extends Application {
             nextLevel = false;
             level++;
         }
+    }
+
+    public boolean checkMonster(int x, int y) {
+        for (AnimatedEntity i : entities) {
+            if (i.getX() == x && i.getY() == y) {
+                return true;
+            }
+        }
+        return false;
     }
 }

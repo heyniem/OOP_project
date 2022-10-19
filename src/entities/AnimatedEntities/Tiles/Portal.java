@@ -23,11 +23,7 @@ public class Portal extends Tiles{
         }
         if (displayed && bomber.getX() == x && bomber.getY() == y) {
 
-            System.out.println("This true + " + entities.size());
-
-            if (entities.size() == 1) {
-                nextLevel = true;
-            }
+            nextLevel = true;
         }
     }
 
