@@ -16,8 +16,8 @@ public class Balloon extends Enemy {
     private int direction = 3;
     private int intervalDead = 0;
     private int temp;
-    //SmartAI balloonAI = new SmartAI();
-    SuperDumbAI balloonAI = new SuperDumbAI();
+    SmartAI balloonAI = new SmartAI(false);
+    //SuperDumbAI balloonAI = new SuperDumbAI();
 
     public Balloon(int xUnit, int yUnit, Image img, int id) {
         super(xUnit, yUnit, img, id);
@@ -32,8 +32,8 @@ public class Balloon extends Enemy {
         }
         else {
             if (x % SCALED_SIZE == 0 && y % SCALED_SIZE == 0) {
-                //direction = balloonAI.chooseDirection(this.x, this.y, direction, 76);
-                direction = balloonAI.chooseDirection(direction, 64);
+                direction = balloonAI.chooseDirection(this.x, this.y, direction, 76);
+                //direction = balloonAI.chooseDirection(direction, 64);
             }
             temp = direction;
             while (true) {
@@ -67,28 +67,28 @@ public class Balloon extends Enemy {
                     }
                 }
                 if (direction == 1) {
-                    if (isFree(x + 1, y) && !isCollide(entities, x + 1, y)) {
+                    if (isFree(x + 1, y)) {
                         this.x++;
                         break;
                     } else {
                         direction = 2;
                     }
                 } else if (direction == 2) {
-                    if (isFree(x, y + 1) && !isCollide(entities, x, y + 1)) {
+                    if (isFree(x, y + 1)) {
                         this.y++;
                         break;
                     } else {
                         direction = 3;
                     }
                 } else if (direction == 3) {
-                    if (isFree(x - 1, y) && !isCollide(entities, x - 1, y)) {
+                    if (isFree(x - 1, y)) {
                         this.x--;
                         break;
                     } else {
                         direction = 0;
                     }
                 } else if (direction == 0) {
-                    if (isFree(x, y - 1) && !isCollide(entities, x, y - 1)) {
+                    if (isFree(x, y - 1)) {
                         this.y--;
                         break;
                     } else {

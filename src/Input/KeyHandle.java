@@ -6,9 +6,11 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 
+import static Database.Database.*;
+
 public class KeyHandle {
     public static boolean up = false, right = false, left = false, down = false,
-            placeBomb = false, click = false, restart = false;
+            placeBomb = false, click = false;
     public void keyHandle(){};
 
     public void checkMouse(Scene scene) {
@@ -46,6 +48,7 @@ public class KeyHandle {
                 if (code == KeyCode.A) left = true;
                 if (code == KeyCode.D) right = true;
                 if (code == KeyCode.X) placeBomb = true;
+                if (code == KeyCode.R) retry = true;
             }
         });
         scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
@@ -57,6 +60,7 @@ public class KeyHandle {
                 if (code == KeyCode.A) left = false;
                 if (code == KeyCode.D) right = false;
                 if (code == KeyCode.X) placeBomb = false;
+                if (code == KeyCode.R) retry =false;
             }
         });
     }

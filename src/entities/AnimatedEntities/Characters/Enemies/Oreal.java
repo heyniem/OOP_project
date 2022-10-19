@@ -23,7 +23,7 @@ public class Oreal extends Enemy {
     Random random = new Random();
 
     SuperDumbAI OrealAI = new SuperDumbAI();
-    SmartAI OrealAI2 = new SmartAI();
+    SmartAI OrealAI2 = new SmartAI(false);
     public Oreal(int xUnit, int yUnit, Image img, int id) {
         super(xUnit, yUnit, img, id);
     }
@@ -79,28 +79,28 @@ public class Oreal extends Enemy {
                     }
                 }
                 if (direction == 1) {
-                    if (isFree(x + 2, y) && !isCollide(entities, x + 2, y)) {
+                    if (isFree(x + 2, y)) {
                         this.x+=2;
                         break;
                     } else {
                         direction = 2;
                     }
                 } else if (direction == 2) {
-                    if (isFree(x, y + 2) && !isCollide(entities, x, y + 2)) {
+                    if (isFree(x, y + 2)) {
                         this.y+=2;
                         break;
                     } else {
                         direction = 3;
                     }
                 } else if (direction == 3) {
-                    if (isFree(x - 2, y) && !isCollide(entities, x - 2, y)) {
+                    if (isFree(x - 2, y)) {
                         this.x-=2;
                         break;
                     } else {
                         direction = 0;
                     }
                 } else if (direction == 0) {
-                    if (isFree(x, y - 2) && !isCollide(entities, x, y - 2)) {
+                    if (isFree(x, y - 2)) {
                         this.y-=2;
                         break;
                     } else {

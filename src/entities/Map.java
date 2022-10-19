@@ -1,5 +1,7 @@
 package entities;
 
+import entities.AnimatedEntities.Weapons.Bomb.Bomb;
+import javafx.scene.Parent;
 import javafx.scene.image.Image;
 
 import static Database.Database.*;
@@ -43,16 +45,67 @@ public class Map extends Entity{
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     };
-    public static Character[][] mapToChar() {
+    public static Character[][] mapToChar(boolean canThroughWall) {
         Character[][] temp = new Character[HEIGHT][WIDTH];
-        for (int i = 0; i < 15; i++) {
-            for (int j = 0; j < 20; j++) {
-                if (scene[i][j] == 1 || scene[i][j] == 2 || scene[i][j] == 3) {
-                    temp[i][j] = '0';
-                } else temp[i][j] = '1';
+        if (canThroughWall) {
+            for (int i = 0; i < HEIGHT; i++) {
+                for (int j = 0; j < WIDTH; j++) {
+                    if (scene[i][j] == 1 || scene[i][j] == 2 || scene[i][j] == 3) {
+                        temp[i][j] = '0';
+                    } else temp[i][j] = '1';
+                }
             }
         }
-        temp[bomber.getY()/SCALED_SIZE][bomber.getX()/SCALED_SIZE] = 'D';
+        else {
+            for (int i = 0; i < HEIGHT; i++) {
+                for (int j = 0; j < WIDTH; j++) {
+                    if (scene[i][j] == 3 || i == 1 || i == HEIGHT - 1 || j == 0 || j == WIDTH - 1) {
+                        temp[i][j] = '0';
+                    } else temp[i][j] = '1';
+                }
+            }
+        }
+        temp[bomber.getY() / SCALED_SIZE][bomber.getX() / SCALED_SIZE] = 'D';
+        return temp;
+    }
+
+    public static Character[][] mapDanger(boolean canThroughWall) {
+        Character[][] temp = mapToChar(canThroughWall);
+        for (Bomb i : bombList) {
+            int x = i.getX() / SCALED_SIZE;
+            int y = i.getY() / SCALED_SIZE;
+            int range = maxBombRange;
+            for (int j = 1; j <= range; j++) {
+                if (temp[y][x + j] == '1' || temp[y][x+j] == '2') {
+                    temp[y][x + j] = '2';
+                } else break;
+            }
+            for (int j = 1; j <= range; j++) {
+                if (temp[y][x - j] == '1' || temp[y][x-j] == '2') {
+                    temp[y][x - j] = '2';
+                } else break;
+            }
+            for (int j = 1; j <= range; j++) {
+                if (temp[y + j][x] == '1' || temp[y+j][x] == '2') {
+                    temp[y + j][x] = '2';
+                } else break;
+            }
+            for (int j = 1; j <= range; j++) {
+                if (temp[y - j][x] == '1' || temp[y-j][x] == '2') {
+                    temp[y - j][x] = '2';
+                } else break;
+            }
+        }
+        for (int i = 0; i < HEIGHT; i++) {
+            for (int j = 0; j < WIDTH; j++) {
+                if (temp[i][j] == '2') {
+                    temp[i][j] = '1';
+                }
+                else if (temp[i][j] == '1') {
+                    temp[i][j] = 'D';
+                }
+            }
+        }
         return temp;
     }
 
@@ -63,5 +116,44 @@ public class Map extends Entity{
     @Override
     public void update() {
 
+    }
+
+    public static void clearMap() {
+        scene = new int[][]{
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+                {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+                {1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1},
+                {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+                {1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1},
+                {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+                {1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1},
+                {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+                {1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1},
+                {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+                {1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1},
+                {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+                {1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1},
+                {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+                {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
+        };
+        explodeScene = new int[][]{
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+        };
     }
 }

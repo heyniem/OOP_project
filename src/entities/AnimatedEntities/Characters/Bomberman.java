@@ -18,7 +18,7 @@ public class Bomberman extends Character {
     public int framePlayer = 0, intervalPlayer = 4, indexPlayer = 0;
     public int  intervalDead = 0;
     public boolean moving;
-    private final int speed = 4;
+    private int speed = 2;
     private int tempX, tempY;
 
     public Bomberman(int xUnit, int yUnit, Image img, int id) {
@@ -184,31 +184,6 @@ public class Bomberman extends Character {
         int nextX_4 = (nextX + SCALED_SIZE - 1) / SCALED_SIZE;
         int nextY_4 = (nextY + SCALED_SIZE - 1) / SCALED_SIZE;
 
-        if (scene[nextY_1][nextX_1] == 4 || scene[nextY_2][nextX_2] == 4
-                || scene[nextY_3][nextX_3] == 4 || scene[nextY_4][nextX_4] == 4) {
-            if (scene[nextY_1][nextX_1] == 4) {
-                Entity object = new Path(nextX_1, nextY_1, Sprite.grass.getFxImage());
-                stillObjects.set(nextY_1 * WIDTH + nextX_1, object);
-                scene[nextY_1][nextX_1] = 0;
-                maxBombRange++;
-            } else if (scene[nextY_2][nextX_2] == 4) {
-                Entity object = new Path(nextX_2, nextY_2, Sprite.grass.getFxImage());
-                stillObjects.set(nextY_2 * WIDTH + nextX_2, object);
-                scene[nextY_2][nextX_2] = 0;
-                maxBombRange++;
-            } else if (scene[nextY_3][nextX_3] == 4) {
-                Entity object = new Path(nextX_3, nextY_3, Sprite.grass.getFxImage());
-                stillObjects.set(nextY_3 * WIDTH + nextX_3, object);
-                scene[nextY_3][nextX_3] = 0;
-                maxBombRange++;
-            } else if (scene[nextY_4][nextX_4] == 4) {
-                Entity object = new Path(nextX_4, nextY_4, Sprite.grass.getFxImage());
-                stillObjects.set(nextY_4 * WIDTH + nextX_4, object);
-                scene[nextY_4][nextX_4] = 0;
-                maxBombRange++;
-            }
-        }
-
         return !((scene[nextY_1][nextX_1] == 1 || scene[nextY_1][nextX_1] == 2) ||
                 (scene[nextY_2][nextX_2] == 1 || scene[nextY_2][nextX_2] == 2) ||
                 (scene[nextY_3][nextX_3] == 1 || scene[nextY_3][nextX_3] == 2) ||
@@ -223,7 +198,7 @@ public class Bomberman extends Character {
                 tempX = i.getX();
                 tempY = i.getY();
                 if (Math.abs(tempX - newX) < 32 && Math.abs(tempY - newY) < 32) {
-                    sound.StopMusic();
+                    sound2.StopMusic();
                     return true;
                 }
             }
@@ -235,8 +210,8 @@ public class Bomberman extends Character {
         for (AnimatedEntity i : entities) {
             if (i.getId() != this.id) {
                 if (((i.getX() - this.x) < 24 && (i.getX() - this.x > -32)) && Math.abs(i.getY() - this.y) < 32) {
-                    sound.StopMusic();
-                    sound.playSingleEp(3);
+                    sound2.StopMusic();
+                    sound2.playSingleEp(3);
                     return true;
                 }
             }
@@ -248,21 +223,21 @@ public class Bomberman extends Character {
         int nextX_1 = x / SCALED_SIZE;
         int nextY_1 = y / SCALED_SIZE;
 
-        int nextX_2 = (x + SCALED_SIZE - 1) / SCALED_SIZE;
+        int nextX_2 = (x + 24 - 1) / SCALED_SIZE;
         int nextY_2 = y / SCALED_SIZE;
 
         int nextX_3 = x / SCALED_SIZE;
         int nextY_3 = (y + SCALED_SIZE - 1) / SCALED_SIZE;
 
-        int nextX_4 = (x + SCALED_SIZE - 1) / SCALED_SIZE;
+        int nextX_4 = (x + 24 - 1) / SCALED_SIZE;
         int nextY_4 = (y + SCALED_SIZE - 1) / SCALED_SIZE;
 
         if (((explodeScene[nextY_1][nextX_1] >=1) ||
                 (explodeScene[nextY_2][nextX_2] >= 1) ||
                 (explodeScene[nextY_3][nextX_3] >= 1) ||
                 (explodeScene[nextY_4][nextX_4] >= 1))) {
-            sound.StopMusic();
-            sound.playSingleEp(2);
+            sound2.StopMusic();
+            sound2.playSingleEp(2);
             dead = true;
         }
         if (this.isDead()) {

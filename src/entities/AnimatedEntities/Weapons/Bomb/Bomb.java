@@ -35,7 +35,6 @@ public class Bomb extends Weapon {
     public int countFrameExplode = 0;
 
     public boolean checkBombExplode = false;
-    public boolean checkBombFlame;
     public boolean bomb_explode = false;
 
     public Bomb(int xUnit, int yUnit, Image img, int id) {
@@ -76,10 +75,18 @@ public class Bomb extends Weapon {
         int tempX = this.x / SCALED_SIZE, tempY = this.y / SCALED_SIZE;
         if (!bomb_explode) {
             bombFlameList.add(new BombFlame(tempX, tempY, bomb_exploded.getFxImage(), -1));
+            explodeScene[tempY][tempX]++;
             detectSurround(tempX, tempY);
             bomb_explode = true;
+            //print explodeScene
+//            for (int i = 0; i < explodeScene.length; i++) {
+//                for (int j = 0; j < explodeScene[0].length; j++) {
+//                    System.out.print(explodeScene[i][j] + " ");
+//                }
+//                System.out.println();
+//            }
+//            System.out.println();
         } else {
-            //System.out.println("This done");
             for (BombFlame i : bombFlameList) i.update();
         }
         countFrameExplode++;

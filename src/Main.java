@@ -1,5 +1,8 @@
 import Database.Database;
 import entities.AnimatedEntities.AnimatedEntity;
+import entities.AnimatedEntities.Characters.Bomberman;
+import entities.AnimatedEntities.Characters.Enemies.Balloon;
+import entities.AnimatedEntities.Characters.Enemies.Kondoria;
 import entities.AnimatedEntities.Characters.Enemies.Oreal;
 import entities.AnimatedEntities.Tiles.Items.BombItem;
 import entities.AnimatedEntities.Tiles.Items.FlameItem;
@@ -25,9 +28,9 @@ import javafx.stage.Stage;
 import java.util.Random;
 
 import static Database.Database.*;
-import static Input.KeyHandle.click;
-import static Input.KeyHandle.placeBomb;
+import static Input.KeyHandle.*;
 import static entities.AnimatedEntities.Tiles.Portal.checkWin;
+import static entities.Map.clearMap;
 import static entities.Map.scene;
 import static graphics.Sprite.*;
 
@@ -36,7 +39,7 @@ public class Main extends Application {
     private GraphicsContext gc;
     private Canvas canvas;
 
-    private final long fps = 60;
+    private final long fps = 50;
 
     private long timeCount = 0, preTimeCount = 0, sec = 0, start = System.currentTimeMillis();
 
@@ -74,6 +77,8 @@ public class Main extends Application {
         keyHandle.checkMouse(scene);
         keyHandle.checkKey(scene);
         stage.setScene(scene);
+        stage.setAlwaysOnTop(true);
+        stage.setResizable(false);
         stage.show();
 
         AnimationTimer timer = new AnimationTimer() {
@@ -96,12 +101,10 @@ public class Main extends Application {
                     }
                 }
                 try {
+                    //System.out.println("diff = " + diff);
                     Thread.sleep(1000 / fps - diff - 2);
                 } catch (Exception e) {
                     System.out.println(e);
-                }
-                if (!click) {
-                    menuObj.render(gc);
                 }
             }
         };
@@ -109,7 +112,7 @@ public class Main extends Application {
 
         createMap();
         createMonsters();
-        sound.PlayMusic(4);
+        sound2.PlayMusic(4);
     }
 
     public void createMap() {
@@ -118,7 +121,7 @@ public class Main extends Application {
             for (int j = 0; j < WIDTH; j++) {
                 if (scene[i][j] == 0) {
                     int ran = new Random().nextInt(15);
-                    if (ran <= 7) {
+                    if (ran <= 2) {
                         scene[i][j] = 2;
                     }
                 }
@@ -128,10 +131,15 @@ public class Main extends Application {
         scene[2][1] = 0;
         scene[3][1] = 0;
         scene[2][2] = 0;
+        scene[4][1] = 2;
+        scene[4][2] = 2;
+        scene[4][3] = 2;
+        scene[3][3] = 2;
+        scene[2][3] = 2;
         for (int i = 0; i < 5; i++) {
             while (true) {
                 int x = randomGen.nextInt(WIDTH - 2) + 1;
-                int y = randomGen.nextInt(HEIGHT - 3) + 1;
+                int y = randomGen.nextInt(HEIGHT - 3) + 2;
                 boolean check = true;
                 for (Item entity : ItemList) {
                     if (entity.getX() == x * SCALED_SIZE && entity.getY() == y * SCALED_SIZE) {
@@ -146,11 +154,10 @@ public class Main extends Application {
                 }
             }
         }
-        //System.out.println("Step 1 done");
         for (int i = 0; i < 5; i++) {
             while (true) {
                 int x = randomGen.nextInt(WIDTH - 2) + 1;
-                int y = randomGen.nextInt(HEIGHT - 3) + 1;
+                int y = randomGen.nextInt(HEIGHT - 3) + 2;
                 boolean check = true;
                 for (Item entity : ItemList) {
                     if (entity.getX() == x * SCALED_SIZE && entity.getY() == y * SCALED_SIZE) {
@@ -169,7 +176,7 @@ public class Main extends Application {
         for (int i = 0; i < 5; i++) {
             while (true) {
                 int x = randomGen.nextInt(WIDTH - 2) + 1;
-                int y = randomGen.nextInt(HEIGHT - 3) + 1;
+                int y = randomGen.nextInt(HEIGHT - 3) + 2;
                 boolean check = true;
                 for (Entity entity : ItemList) {
                     if (entity.getX() == x * SCALED_SIZE && entity.getY() == y * SCALED_SIZE) {
@@ -185,28 +192,11 @@ public class Main extends Application {
             }
         }
         //Create Portal
-        while (true) {
-            int x = randomGen.nextInt(WIDTH - 2) + 1;
-            int y = randomGen.nextInt(HEIGHT - 3) + 1;
-            boolean check = true;
-            for (Item entity : ItemList) {
-                if (entity.getX() == x * SCALED_SIZE && entity.getY() == y * SCALED_SIZE) {
-                    check = false;
-                    break;
-                }
-            }
-            if (scene[y][x] == 2 && check) {
-                gamePortal.setX(x * SCALED_SIZE);
-                gamePortal.setY(y * SCALED_SIZE);
-                break;
-            }
-        }
-//        //Create Portal
-//        while(true) {
+//        while (true) {
 //            int x = randomGen.nextInt(WIDTH - 2) + 1;
-//            int y = randomGen.nextInt(HEIGHT - 2) + 1;
+//            int y = randomGen.nextInt(HEIGHT - 3) + 2;
 //            boolean check = true;
-//            for (Item entity  : ItemList) {
+//            for (Item entity : ItemList) {
 //                if (entity.getX() == x * SCALED_SIZE && entity.getY() == y * SCALED_SIZE) {
 //                    check = false;
 //                    break;
@@ -242,7 +232,10 @@ public class Main extends Application {
     }
 
     public void update() {
-        if (bomber.dead) {
+        if(retry || nextLevel) {
+            resetAll();
+        }
+        else if (bomber.dead) {
             bomber.update();
         } else if (!Iswin) {
             for (int i = 0; i < entities.size(); i++) {
@@ -291,17 +284,20 @@ public class Main extends Application {
                 winObj.render(gc);
             }
         }
+        if (!click) {
+            menuObj.render(gc);
+        }
     }
 
     public void createMonsters() {
         Random randomGen = new Random();
         AnimatedEntity object;
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 0; i++) {
             while (true) {
                 int ranx = randomGen.nextInt(18);
                 int rany = randomGen.nextInt(13);
-                if ((ranx >= 2 || rany >= 2) && scene[rany + 1][ranx + 1] == 0) {
-                    object = new Oreal(ranx + 1, rany + 1, oneal_left1.getFxImage(), i + 1);
+                if ((ranx >= 4 || rany >= 5) && scene[rany + 1][ranx + 1] == 0 ) {
+                    object = new Balloon(ranx + 1, rany + 1, kondoria_left1.getFxImage(), i + 1);
                     entities.add(object);
                     break;
                 }
@@ -347,6 +343,41 @@ public class Main extends Application {
                     i.setY(bombY - 32);
                 }
             }
+        }
+    }
+
+    public void resetAll() {
+        if (retry) {
+            entities.clear();
+            stillObjects.clear();
+            ItemList.clear();
+            bombList.clear();
+            clearMap();
+            bomber = new Bomberman(1, 2, player_down.getFxImage(), 100);
+            createMap();
+            createMonsters();
+            time = 300;
+            score = 0;
+            gameOver = false;
+            Iswin = false;
+            checkWin = false;
+            retry = false;
+        }
+        else if (nextLevel){
+            entities.clear();
+            System.out.println("No of entities now: " + entities.size());
+            stillObjects.clear();
+            ItemList.clear();
+            bombList.clear();
+            clearMap();
+            bomber = new Bomberman(1, 2, player_down.getFxImage(), 100);
+            createMap();
+            createMonsters();
+            time += 120;
+            gameOver = false;
+            Iswin = false;
+            checkWin = false;
+            nextLevel = false;
         }
     }
 }

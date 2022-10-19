@@ -21,7 +21,7 @@ public abstract class AnimatedEntity extends Entity {
     }
 
     public boolean isDead() {
-        return false;
+        return dead;
     }
 
     public void checkDead() {

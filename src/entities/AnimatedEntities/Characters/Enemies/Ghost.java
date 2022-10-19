@@ -61,36 +61,32 @@ public class Ghost extends Enemy {
                     }
                 }
                 if (direction == 1) {
-                    if (isFree(x + 1, y) && !isCollide(entities, x + 1, y)) {
+                    if (isFree(x + 1, y)) {
                         this.x++;
                         break;
                     } else {
-                        if (isCollide(entities, x + 1, y)) direction = 3;
-                        else direction = 2;
+                        direction = 2;
                     }
                 } else if (direction == 2) {
-                    if (isFree(x, y + 1) && !isCollide(entities, x, y + 1)) {
+                    if (isFree(x, y + 1)) {
                         this.y++;
                         break;
                     } else {
-                        if (isCollide(entities, x, y + 1)) direction = 0;
-                        else direction = 3;
+                        direction = 3;
                     }
                 } else if (direction == 3) {
-                    if (isFree(x - 1, y) && !isCollide(entities, x - 1, y)) {
+                    if (isFree(x - 1, y)) {
                         this.x--;
                         break;
                     } else {
-                        if (isCollide(entities, x - 1, y)) direction = 1;
-                        else direction = 0;
+                        direction = 0;
                     }
                 } else if (direction == 0) {
-                    if (isFree(x, y - 1) && !isCollide(entities, x, y - 1)) {
+                    if (isFree(x, y - 1)) {
                         this.y--;
                         break;
                     } else {
-                        if (isCollide(entities, x, y - 1)) direction = 2;
-                        else direction = 1;
+                        direction = 1;
                     }
                 }
                 if (direction == temp) break;

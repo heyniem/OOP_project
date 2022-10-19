@@ -23,10 +23,10 @@ public class Portal extends Tiles{
         }
         if (displayed && bomber.getX() == x && bomber.getY() == y) {
 
+            System.out.println("This true + " + entities.size());
+
             if (entities.size() == 1) {
-                sound.playSingleEp(7);
-                checkWin = true;
-                Iswin = true;
+                nextLevel = true;
             }
         }
     }

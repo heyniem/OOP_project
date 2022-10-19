@@ -20,6 +20,7 @@ import java.util.TimerTask;
 public class Database {
 
     public static Sound sound = new Sound();
+    public static Sound sound2 = new Sound();
 
     public static final int WIDTH = 20;
     public static final int HEIGHT = 16;
@@ -27,6 +28,9 @@ public class Database {
     public static int maxBomb = 1;
     public static int maxBombRange = 1;
     public static int noOfSpeedItem = 0;
+    public static boolean nextLevel = false;
+    public static boolean retry = false;
+    public static boolean reset = true;
 
     // animate bomb
     public static final int intervalBomb = 5;
@@ -45,7 +49,7 @@ public class Database {
 
     public static Image win = new Image("win.png");
     public static Image winScene = new Image("classic.png");
-    public static Entity gamePortal = new Portal(1, 2, Sprite.portal.getFxImage(), false);
+    public static Entity gamePortal = new Portal(1, 3, Sprite.portal.getFxImage(), false);
     public static Entity menuObj = new Portal(0, 0, menu, true);
 
     public static Entity endObj = new Portal(0, 0, end, true);
