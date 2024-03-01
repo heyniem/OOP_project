@@ -6,4 +6,14 @@
 
 
 # About
+- Game offline dựa trên game Bomberman kinh điển với nhiều cải tiến: Đa dạng loại yêu quái với tính năng khác nhau, nhiều màn chơi, ...
+
+# How to run
+- Đã cài đặt JavaFx và JDK trên máy tính
+- Lần lượt chạy 2 lệnh sau trên CMD
+- 1, for /r %x in (*.java) do javac --module-path "C:/Program Files/Java/javafx-sdk-21.0.2/lib" --add-modules javafx.controls,javafx.fxml "%x"
+- (Thay thế C:/Program Files/Java/javafx-sdk-21.0.2/lib bằng đường dẫn đúng trên máy tính chứa thư mục lib của JavaFx)
+- 2, java --module-path "C:/Program Files/Java/javafx-sdk-21.0.2/lib" --add-modules javafx.controls,javafx.fxml Main
+
+
 
