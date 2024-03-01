@@ -11,8 +11,8 @@
 # How to run
 - Đã cài đặt JavaFx và JDK trên máy tính
 - Lần lượt chạy 2 lệnh sau trên CMD:
-  * for /r %x in (*.java) do javac --module-path "C:/Program Files/Java/javafx-sdk-21.0.2/lib" --add-modules javafx.controls,javafx.fxml "%x"
-  * java --module-path "C:/Program Files/Java/javafx-sdk-21.0.2/lib" --add-modules javafx.controls,javafx.fxml Main
+  _ for /r %x in (*.java) do javac --module-path "C:/Program Files/Java/javafx-sdk-21.0.2/lib" --add-modules javafx.controls,javafx.fxml "%x"
+  _ java --module-path "C:/Program Files/Java/javafx-sdk-21.0.2/lib" --add-modules javafx.controls,javafx.fxml Main
 
 
 
