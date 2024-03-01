@@ -26,7 +26,8 @@ import javafx.stage.Stage;
 import java.util.Random;
 
 import static Database.Database.*;
-import static Input.KeyHandle.*;
+import static Input.KeyHandle.click;
+import static Input.KeyHandle.placeBomb;
 import static entities.AnimatedEntities.Tiles.Portal.checkWin;
 import static entities.Map.clearMap;
 import static entities.Map.scene;
@@ -196,22 +197,22 @@ public class Main extends Application {
             }
         }
         //Create Portal
-//        while (true) {
-//            int x = randomGen.nextInt(WIDTH - 2) + 1;
-//            int y = randomGen.nextInt(HEIGHT - 3) + 2;
-//            boolean check = true;
-//            for (Item entity : ItemList) {
-//                if (entity.getX() == x * SCALED_SIZE && entity.getY() == y * SCALED_SIZE) {
-//                    check = false;
-//                    break;
-//                }
-//            }
-//            if (scene[y][x] == 2 && check) {
-//                gamePortal.setX(x * SCALED_SIZE);
-//                gamePortal.setY(y * SCALED_SIZE);
-//                break;
-//            }
-//        }
+        while (true) {
+            int x = randomGen.nextInt(WIDTH - 2) + 1;
+            int y = randomGen.nextInt(HEIGHT - 3) + 2;
+            boolean check = true;
+            for (Item entity : ItemList) {
+                if (entity.getX() == x * SCALED_SIZE && entity.getY() == y * SCALED_SIZE) {
+                    check = false;
+                    break;
+                }
+            }
+            if (scene[y][x] == 2 && check) {
+                gamePortal.setX(x * SCALED_SIZE);
+                gamePortal.setY(y * SCALED_SIZE);
+                break;
+            }
+        }
         //Print item list
         for (Item entity : ItemList) {
             System.out.println(entity.getY() / SCALED_SIZE + " - " + entity.getX() / SCALED_SIZE + " - " + entity.getClass());
