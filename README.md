@@ -10,7 +10,7 @@
 
 # How to run
 - Đã cài đặt JavaFx và JDK trên máy tính
-- Lần lượt chạy 2 lệnh sau (sử dụng CMD) ở thư mục src
+- Sau khi clone project về lần lượt chạy 2 lệnh sau (sử dụng CMD) ở thư mục src
 - 1, for /r %x in (*.java) do javac --module-path "C:/Program Files/Java/javafx-sdk-21.0.2/lib" --add-modules javafx.controls,javafx.fxml "%x"
 - 2, java --module-path "C:/Program Files/Java/javafx-sdk-21.0.2/lib" --add-modules javafx.controls,javafx.fxml Main
 - (Thay thế C:/Program Files/Java/javafx-sdk-21.0.2/lib bằng đường dẫn đúng trên máy tính chứa thư mục lib của JavaFx)
